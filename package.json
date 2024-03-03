@@ -11,6 +11,12 @@
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx ."
   },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.2"
+  },
   "devDependencies": {
     "@electron-forge/cli": "^7.3.0",
     "@electron-forge/maker-deb": "^7.3.0",
@@ -22,20 +28,21 @@
     "@electron-forge/plugin-vite": "^7.3.0",
     "@electron/fuses": "^1.7.0",
     "@preact/preset-vite": "^2.8.1",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
+    "@types/react": "^18.2.61",
+    "@types/react-dom": "^18.2.19",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "@vitejs/plugin-react": "^4.2.1",
     "electron": "29.1.0",
     "eslint": "^8.0.1",
     "eslint-plugin-import": "^2.25.0",
-    "preact": "^10.19.6",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
     "ts-node": "^10.0.0",
     "typescript": "~4.5.4",
     "vite": "^5.0.12"
   },
   "keywords": [],
   "author": "lira",
-  "license": "MIT",
-  "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
-  }
+  "license": "MIT"
 }

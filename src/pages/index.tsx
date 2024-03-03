@@ -1,12 +1,12 @@
-import { useState } from 'preact/hooks';
+import { useState } from 'react';
+import { Layout } from './layout';
 
 export function App() {
-  const [count, setCount] = useState(0)
-
+  const [count, setCount] = useState(0);
   return (
-    <>
+    <Layout>
       <h1>Vite + Preact</h1>
-      <div class="card">
+      <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
@@ -14,9 +14,9 @@ export function App() {
           Edit <code>src/app.tsx</code> and save to test HMR
         </p>
       </div>
-      <p class="read-the-docs">
+      <p className="read-the-docs">
         Click on the Vite and Preact logos to learn more
       </p>
-    </>
+    </Layout>
   )
 }
