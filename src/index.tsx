@@ -1,32 +1,32 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import {
-  createBrowserRouter,
-  RouterProvider
+  BrowserRouter,
+  Route,
+  Routes
 } from 'react-router-dom';
-import { App } from './pages';
-import { Test } from './pages/test'
-import './index.css';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from './utils';
+import { Home, Test } from './pages';
+
 
 document.addEventListener('readystatechange', init);
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App/>,
-  },
-  {
-    path: '/test',
-    element: <Test/>,
-  }
-]);
 
 function init() {
   const root = document.createElement('div');
   ReactDOM.createRoot(root).render(
     <StrictMode>
-      <RouterProvider router={router} />
-    </StrictMode>,
+      <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/test" element={<Test />} />
+        </Routes>
+      </BrowserRouter>
+      </ThemeProvider>
+    </StrictMode>
   )
   document.body.appendChild(root);
 }
