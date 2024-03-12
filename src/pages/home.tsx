@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Layout } from './layout';
+import Layout from './layout';
 
-export function Home() {
+export default function () {
   const [count, setCount] = useState(0);
   return (
     <Layout>
-      <h1>Vite + Preact</h1>
+      <h1>Hello, World</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
@@ -20,3 +20,4 @@ export function Home() {
     </Layout>
   )
 }
+
