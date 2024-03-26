@@ -17,14 +17,17 @@ export default defineConfig((env) => {
       },
       rollupOptions: {
         external,
-      },
+      }
     },
     plugins: [pluginHotRestart('restart'), react()],
     define,
     resolve: {
+      alias: {
+        "@": "/src"
+      },
       // Load the Node.js entry.
-      mainFields: ['module', 'jsnext:main', 'jsnext'],
-    },
+      mainFields: ['module', 'jsnext:main', 'jsnext']
+    }
   };
 
   return mergeConfig(getBuildConfig(forgeEnv), config);

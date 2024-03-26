@@ -7,8 +7,8 @@ import {
 } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
-import theme from './utils/muiTheme';
-import Home from './pages/home';
+import theme from './utils/theme';
+import Home from './pages/Home';
 
 
 document.addEventListener('readystatechange', init);

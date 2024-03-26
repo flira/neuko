@@ -1,0 +1,7 @@
+{
+  "name": "~",
+  "type": "module",
+  "devDependencies": {
+    "@wdio/cli": "^8.35.1"
+  }
+}
