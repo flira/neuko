@@ -15,6 +15,7 @@ document.addEventListener('readystatechange', init);
 
 function init() {
   const root = document.createElement('div');
+  root.setAttribute("style", "display: flex; flex-grow: 1");
   ReactDOM.createRoot(root).render(
     <StrictMode>
       <ThemeProvider theme={theme}>

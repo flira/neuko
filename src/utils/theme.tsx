@@ -16,6 +16,11 @@ const theme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: `
+        body {
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+        }
         em, .italic {
           font-variation-settings: "slnt" -10;
         }

@@ -21,7 +21,6 @@ export default function ({ location }: LayoutProps) {
   return (
     <Box component="header" sx={theme => ({
       borderBottom: `solid 1px ${theme.palette.grey[400]}`,
-      mb: 8,
       pb: 8
     })}>
       <Box

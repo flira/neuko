@@ -90,3 +90,4 @@ const Icon = React.forwardRef<HTMLSpanElement, IconProps>(function Icon(
 })
 
 export default Icon
+export { Icon }

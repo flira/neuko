@@ -5,6 +5,20 @@
   <meta charset="UTF-8" />
   <title>NeuKo</title>
   <script type="module" src="/src/index.tsx"></script>
+  <script>
+    // Para teste do websocket
+    (()=>{
+      const ws = new WebSocket("ws://localhost:1337")
+      const keyDown = ({key}) => {
+        const regex = /[wasd]/
+        if(regex.test(key)) {
+          ws.send(key)
+        }
+      }
+      addEventListener("keydown", keyDown)
+    })()
+
+  </script>
   <style>
     /* Fonte principal */
     @font-face {
