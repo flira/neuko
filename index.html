@@ -6,7 +6,11 @@
   <title>NeuKo</title>
   <script type="module" src="/src/index.tsx"></script>
   <script>
-    // Para teste do websocket
+    /**
+     * Script para teste do websocket.
+     * Usa o "WASD" do teclado para enviar
+     * comandos para o servidor.
+     */
     (()=>{
       const ws = new WebSocket("ws://localhost:1337")
       const keyDown = ({key}) => {

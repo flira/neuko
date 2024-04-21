@@ -44,7 +44,28 @@ const theme = createTheme({
           -moz-osx-font-smoothing: grayscale;
           font-family: Material Symbols Rounded;
         }
+        @keyframes keypress {
+          0% {
+            transform: scale(1) translateY(0)
+          }
+          75% {
+            transform: scale(.9) translateY(3px)
+          }
+          100% {
+            transform: scale(1) translateY(0)
+          }
+        }
       `
+    },
+    MuiCircularProgress: {
+      styleOverrides: {
+        root: {
+          transition: "unset"
+        },
+        circle: {
+          transition: "unset"
+        }
+      }
     }
   }
 });

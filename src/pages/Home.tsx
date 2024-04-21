@@ -1,12 +1,17 @@
-
-
 import Layout from "./Layout"
-import { Box } from "@mui/material"
+import { useKeyboardContext } from "../providers/KeyboardProvider"
+
+/**
+ * @TODO Tentar implementar o (@link https://www.npmjs.com/package/duckduckit#8-suggestions---suggestions-by-duckduckgocom | duckduckit)
+ * para fazer o autofill (ver item 8: suggestion)
+ */
 
 export default function () {
+  const { textValue: value } = useKeyboardContext()
+
   return (
-    <Layout location={{ "level 1": "home", "level 2": "home" }}>
-      <h1>Hello, World</h1>
+    <Layout>
+      {value}|
     </Layout>
   )
 }

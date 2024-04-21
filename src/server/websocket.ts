@@ -42,7 +42,6 @@ class NeukoWSS {
 
   private _onClose(ws: WebSocket) {
     this._clients.delete(ws);
-    console.dir(this._clients);
   }
 
   init() {
