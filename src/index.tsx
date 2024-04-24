@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import AppProvider from "./providers/AppProvider"
-import Home from './pages/Home';
+import TextEditor from './pages/TextEditor';
 
 
 document.addEventListener('readystatechange', init);
@@ -21,7 +21,7 @@ function init() {
           <CssBaseline />
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<TextEditor />} />
             </Routes>
           </BrowserRouter>
         </AppProvider>

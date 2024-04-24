@@ -1,5 +1,5 @@
 import { Box, CircularProgress } from "@mui/material"
-import { lightBlue } from "@mui/material/colors"
+import { cyan } from "@mui/material/colors"
 import { Icon } from "../Icon"
 import { textKeys } from "./keyset/text"
 import React, { useEffect, useState } from "react"
@@ -48,8 +48,11 @@ export function TextKeyboard({ children }: React.HTMLProps<HTMLElement>) {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", flexGrow: "1" }}>
       <Box sx={{
+        alignItems: "center",
         borderBottom: theme => `solid 1px ${theme.palette.grey[400]}`,
+        display: "flex",
         flexGrow: "1",
+        justifyContent: "center",
         mb: 8
       }}>
         {children}
@@ -111,7 +114,7 @@ function Key({ keyData: key, position }: KeyProps) {
         textAlign: "center",
         width: "2em",
         ...(isSelected ? {
-          bgcolor: lightBlue[100]
+          bgcolor: cyan.A100
         } : {})
       }}>
       {children}
