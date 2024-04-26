@@ -11,7 +11,6 @@ const validPositions: Set<string> = new Set()
 
 export function TextKeyboard({ children }: React.HTMLProps<HTMLElement>) {
   const { currentKey, setCurrentKey } = useKeyboardContext()
-  console.log(validPositions);
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:1337', 'App')
     ws.onmessage = ({ data }) => {
