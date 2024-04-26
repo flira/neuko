@@ -7,16 +7,11 @@ import { useKeyboardContext } from "../../providers/KeyboardProvider"
 import type { Keyboard } from "src/types"
 import type { BoxProps } from "@mui/material"
 
-const validPositions: [number, number][] = []
-const isValidPosition: ([x, y]: Keyboard.KeyPosition) => boolean =
-  (position) => !!validPositions.find(
-    (possiblePosition) => (
-      JSON.stringify(position) === JSON.stringify(possiblePosition)
-    )
-  )
+const validPositions: Set<string> = new Set()
 
 export function TextKeyboard({ children }: React.HTMLProps<HTMLElement>) {
   const { currentKey, setCurrentKey } = useKeyboardContext()
+  console.log(validPositions);
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:1337', 'App')
     ws.onmessage = ({ data }) => {
@@ -25,18 +20,30 @@ export function TextKeyboard({ children }: React.HTMLProps<HTMLElement>) {
         default: break
         case "w":
           --newKey[1]
+          validPositions.has(newKey.toString()) ?
+            setCurrentKey(newKey) :
+            setCurrentKey([currentKey[0], -1 * currentKey[1]])
           break
         case "a":
           --newKey[0]
+          validPositions.has(newKey.toString()) ?
+            setCurrentKey(newKey) :
+            setCurrentKey([-1 * currentKey[0], currentKey[1]])
           break
         case "s":
           ++newKey[1]
+          validPositions.has(newKey.toString()) ?
+            setCurrentKey(newKey) :
+            setCurrentKey([currentKey[0], -1 * currentKey[1]])
           break
         case "d":
           ++newKey[0]
+          validPositions.has(newKey.toString()) ?
+            setCurrentKey(newKey) :
+            setCurrentKey([-1 * currentKey[0], currentKey[1]])
           break
       }
-      if (isValidPosition(newKey)) {
+      if (validPositions.has(newKey.toString())) {
         setCurrentKey(newKey)
       }
     }
@@ -95,7 +102,8 @@ interface KeyProps {
 
 function Key({ keyData: key, position }: KeyProps) {
   const { currentKey } = useKeyboardContext()
-  const isSelected = JSON.stringify(position) === JSON.stringify(currentKey)
+  const stringPosition = position.toString()
+  const isSelected = stringPosition === currentKey.toString()
 
   const Container = ({
     children,
@@ -125,7 +133,7 @@ function Key({ keyData: key, position }: KeyProps) {
       return <Container />
     }
     case "char": {
-      validPositions.push(position)
+      validPositions.add(stringPosition)
       return (
         <Container>
           <CharKey selected={isSelected}>
@@ -135,7 +143,7 @@ function Key({ keyData: key, position }: KeyProps) {
       )
     }
     case "cmd": {
-      validPositions.push(position)
+      validPositions.add(stringPosition)
       return (
         <Container>
           <CmdKey
@@ -148,7 +156,7 @@ function Key({ keyData: key, position }: KeyProps) {
       )
     }
     case "neutral": {
-      validPositions.push(position)
+      validPositions.add(stringPosition)
       return (
         <Container>
           <Icon>pending</Icon>
