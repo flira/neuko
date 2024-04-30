@@ -14,7 +14,9 @@ export default function (
   return (
     <Box sx={{ ...baseStyle, p: 8 }}>
       <Breadcrumb location={location} />
-      <Box component="main" sx={baseStyle}>
+      <Box component="main" sx={{...baseStyle,
+        bgcolor: theme => theme.palette.background.paper
+      }}>
         <TextKeyboard>
           {children}
         </TextKeyboard>

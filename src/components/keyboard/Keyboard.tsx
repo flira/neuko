@@ -115,11 +115,11 @@ function Key({ keyData: key, position }: KeyProps) {
         borderRadius: "100%",
         display: "flex",
         fontSize: "2em",
-        height: "2em",
+        height: "1.6em",
         justifyContent: "center",
         lineHeight: "1",
         textAlign: "center",
-        width: "2em",
+        width: "1.6em",
         ...(isSelected ? {
           bgcolor: cyan.A100
         } : {})
@@ -319,7 +319,7 @@ function TimerCounter({ children, ...otherProps }: BoxProps) {
       }}>
         <CircularProgress
           color="inherit"
-          size={64}
+          size={"1.6em"}
           value={timerValue}
           variant="determinate" />
       </Box>
