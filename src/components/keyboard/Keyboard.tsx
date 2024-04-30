@@ -55,7 +55,8 @@ export function TextKeyboard({ children }: React.HTMLProps<HTMLElement>) {
     <Box sx={{ display: "flex", flexDirection: "column", flexGrow: "1" }}>
       <Box sx={{
         alignItems: "center",
-        borderBottom: theme => `solid 1px ${theme.palette.grey[400]}`,
+        background: theme => theme.palette.grey[200],
+        borderRadius: "10px",
         display: "flex",
         flexGrow: "1",
         justifyContent: "center",
@@ -292,13 +293,12 @@ function TimerCounter({ children, ...otherProps }: BoxProps) {
     timerCounterIndex = 0
     timerConterTimeout = setInterval(() => {
       if (timerCounterIndex < 100) {
-        setTimerValue(++timerCounterIndex);
-        return;
+        setTimerValue(++timerCounterIndex)
+        return
       }
-      setTimerValue(100);
-      timerCounterIndex = 0;
-      clearInterval(timerConterTimeout);
-      timerConterTimeout = null;
+      setTimerValue(100)
+      timerCounterIndex = 0
+      clearInterval(timerConterTimeout)
     }, (keyPressLag - animationTime) / 100)
   }, []);
 

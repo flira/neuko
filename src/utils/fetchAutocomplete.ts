@@ -1,3 +1,5 @@
+import { Typewise } from "../types"
+
 export default async function (value: string) {
   let request
   try {
@@ -18,7 +20,7 @@ export default async function (value: string) {
       console.error(request);
       return;
     }
-    return request.json();
+    return request.json() as Promise<Typewise.CompletionResponse>;
   } catch(err) {
     console.error(err);
     return;

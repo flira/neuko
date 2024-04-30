@@ -17,6 +17,9 @@ export default defineConfig((env) => {
     },
     plugins: [pluginExposeRenderer(name)],
     resolve: {
+      alias: {
+        "@": "/src"
+      },
       preserveSymlinks: true,
     },
     clearScreen: false,

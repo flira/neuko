@@ -19,10 +19,7 @@ export default function ({ location }: LayoutProps) {
     .map(locationMap.bind(null, id)) : undefined;
 
   return (
-    <Box component="header" sx={theme => ({
-      borderBottom: `solid 1px ${theme.palette.grey[400]}`,
-      pb: 8
-    })}>
+    <Box component="header" sx={{ pb: 2 }}>
       <Box
         component="ol"
         aria-label="Breadcrump visual"

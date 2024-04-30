@@ -12,7 +12,7 @@ export default function (
     flexGrow: "1"
   }
   return (
-    <Box sx={{ ...baseStyle, p: 8 }}>
+    <Box sx={{ ...baseStyle, p: 2 }}>
       <Breadcrumb location={location} />
       <Box component="main" sx={{...baseStyle,
         bgcolor: theme => theme.palette.background.paper

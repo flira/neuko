@@ -5,9 +5,11 @@ const defaultCaps: Keyboard.Caps = {active: false, locked: false};
 const defaultLayout: Keyboard.Layout = "navigation"
 
 const KeyboardContext = createContext<Keyboard.KeyboardContext>({
+  autocomplete: [],
   caps: defaultCaps,
   currentKey: [0, 0],
   layout: defaultLayout,
+  setAutocomplete: () => [],
   setCaps: () => defaultCaps,
   setCurrentKey: () => "",
   setLayout: () => defaultLayout,
@@ -17,17 +19,20 @@ const KeyboardContext = createContext<Keyboard.KeyboardContext>({
 export const useKeyboardContext = () => useContext(KeyboardContext);
 
 export default function ({ children }: React.HTMLProps<Element>) {
-  const [caps, setCaps] = useState(defaultCaps)
-  const [currentKey, setCurrentKey] = useState([0, 0] as Keyboard.KeyPosition)
-  const [layout, setLayout] = useState(defaultLayout)
-  const [textValue, setTextValue] = useState("")
+  const [caps, setCaps] = useState<Keyboard.Caps>(defaultCaps)
+  const [currentKey, setCurrentKey] = useState<Keyboard.KeyPosition>([0, 0])
+  const [layout, setLayout] = useState<Keyboard.Layout>(defaultLayout)
+  const [textValue, setTextValue] = useState<string>("")
+  const [autocomplete, setAutocomplete] = useState<string[]>([])
 
   return (
     <KeyboardContext.Provider value={{
+      autocomplete,
       caps,
       currentKey,
       layout,
       textValue,
+      setAutocomplete,
       setCaps,
       setCurrentKey,
       setLayout,

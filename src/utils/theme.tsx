@@ -55,6 +55,14 @@ const theme = createTheme({
             transform: scale(1) translateY(0)
           }
         }
+        @keyframes textcursor {
+          0%, 49% {
+            opacity: 0
+          }
+          50%, 100% {
+            opacity: 1
+          }
+        }
       `
     },
     MuiCircularProgress: {

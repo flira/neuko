@@ -37,10 +37,12 @@ export namespace Keyboard {
     locked: boolean
   }
   export interface KeyboardContext {
+    autocomplete: string[]
     caps: Caps
     currentKey: KeyPosition
     layout: Layout
     textValue: string
+    setAutocomplete: React.Dispatch<React.SetStateAction<string[]>>
     setCaps: React.Dispatch<React.SetStateAction<Caps>>
     setCurrentKey: React.Dispatch<React.SetStateAction<KeyPosition>>
     setLayout: React.Dispatch<React.SetStateAction<Layout>>
