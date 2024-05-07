@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import AppProvider from "./providers/AppProvider"
+import Home from './pages/Home';
 import TextEditor from './pages/TextEditor';
 
 
@@ -17,14 +18,14 @@ function init() {
   root.setAttribute("style", "display: flex; flex-grow: 1");
   ReactDOM.createRoot(root).render(
     <StrictMode>
-        <AppProvider>
-          <CssBaseline />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<TextEditor />} />
-            </Routes>
-          </BrowserRouter>
-        </AppProvider>
+      <AppProvider>
+        <CssBaseline />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<TextEditor />} />
+          </Routes>
+        </BrowserRouter>
+      </AppProvider>
     </StrictMode>
   )
   document.body.appendChild(root);

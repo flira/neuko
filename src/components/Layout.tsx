@@ -1,6 +1,5 @@
 import Box from "@mui/material/Box"
 import Breadcrumb, { LayoutProps } from "../components/Breadcrumb"
-import { TextKeyboard } from "../components/keyboard"
 import { SxProps } from "@mui/material"
 
 export default function (
@@ -14,12 +13,11 @@ export default function (
   return (
     <Box sx={{ ...baseStyle, p: 2 }}>
       <Breadcrumb location={location} />
-      <Box component="main" sx={{...baseStyle,
+      <Box component="main" sx={{
+        ...baseStyle,
         bgcolor: theme => theme.palette.background.paper
       }}>
-        <TextKeyboard>
-          {children}
-        </TextKeyboard>
+        {children}
       </Box>
     </Box>
   )

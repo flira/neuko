@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react"
 import type { Keyboard } from "src/types"
 
-const defaultCaps: Keyboard.Caps = {active: false, locked: false};
+const defaultCaps: Keyboard.Caps = { active: false, locked: false };
 const defaultLayout: Keyboard.Layout = "navigation"
 
 const KeyboardContext = createContext<Keyboard.KeyboardContext>({
@@ -9,13 +9,17 @@ const KeyboardContext = createContext<Keyboard.KeyboardContext>({
   caps: defaultCaps,
   currentKey: [0, 0],
   layout: defaultLayout,
+<<<<<<< HEAD
   setAutocomplete: () => [],
+=======
+  textValue: "",
+>>>>>>> 537f81c (perf: refatoração do teclado)
   setCaps: () => defaultCaps,
   setCurrentKey: () => "",
   setLayout: () => defaultLayout,
-  setTextValue: () => "",
-  textValue: ""
+  setTextValue: () => [],
 });
+
 export const useKeyboardContext = () => useContext(KeyboardContext);
 
 export default function ({ children }: React.HTMLProps<Element>) {

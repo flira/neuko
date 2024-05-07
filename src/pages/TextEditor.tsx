@@ -1,6 +1,7 @@
 import Layout from "../components/Layout"
 import fetchAutocomplete from "../utils/fetchAutocomplete"
 import { useKeyboardContext } from "../providers/KeyboardProvider"
+import { TextKeyboard } from "../components/keyboard"
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography"
 import { useEffect } from "react"

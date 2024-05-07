@@ -1,5 +1,8 @@
 import { createTheme } from '@mui/material/styles';
 
+/**
+ * Tema do MUI para o NeuKo.
+ */
 const theme = createTheme({
   typography: {
     fontFamily: 'Inter, sans-serif',

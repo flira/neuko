@@ -156,5 +156,4 @@ textKeys.push(
   ]
 );
 
-export { textKeys };
 export default textKeys;
