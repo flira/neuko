@@ -1,4 +1,4 @@
-import type { Keyboard } from "../types"
+import type { Keyboard } from "@/types"
 
 function keyExists(position: Keyboard.KeyPosition)  {
   return !!document.querySelector(

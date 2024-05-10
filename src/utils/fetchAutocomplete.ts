@@ -1,4 +1,4 @@
-import { Typewise } from "../types"
+import type { Typewise } from "../types"
 
 export default async function (value: string) {
   let request

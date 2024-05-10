@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box"
-import Breadcrumb, { LayoutProps } from "../components/Breadcrumb"
+import Breadcrumb, { LayoutProps } from "@/components/Breadcrumb"
 import { SxProps } from "@mui/material"
 
 export default function (

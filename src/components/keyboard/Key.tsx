@@ -1,9 +1,9 @@
 import { Box, CircularProgress } from "@mui/material"
 import { cyan } from "@mui/material/colors"
-import { Icon } from "../Icon"
+import { Icon } from "@/components/Icon"
 import { useEffect, useState } from "react"
-import { useKeyboardContext } from "../../providers/KeyboardProvider"
-import type { Keyboard } from "src/types"
+import { useKeyboardContext } from "@/providers/KeyboardProvider"
+import type { Keyboard } from "@/types"
 import type { BoxProps } from "@mui/material"
 
 export interface KeyProps {
@@ -75,7 +75,6 @@ export default function Key({ keyData: key, position }: KeyProps) {
 }
 
 let keyboardTimer: NodeJS.Timeout
-const keyPressLag = 1.25e3
 
 interface CharKeyProps {
   children: string,
@@ -85,6 +84,7 @@ interface CharKeyProps {
 function CharKey({ children, selected }: CharKeyProps) {
   const {
     caps,
+    keySpeed,
     setCaps,
     setTextValue,
     setCurrentKey,
@@ -103,7 +103,7 @@ function CharKey({ children, selected }: CharKeyProps) {
   useEffect(() => {
     if (selected) {
       clearTimeout(keyboardTimer)
-      keyboardTimer = setTimeout(timeoutHandler, keyPressLag)
+      keyboardTimer = setTimeout(timeoutHandler, keySpeed)
     }
     return () => {
       clearTimeout(keyboardTimer)
@@ -131,6 +131,7 @@ interface CmdKeyProps {
 function CmdKey({ action, children, selected, value }: CmdKeyProps) {
   const {
     caps,
+    keySpeed,
     setCaps,
     setCurrentKey,
     setTextValue,
@@ -159,7 +160,7 @@ function CmdKey({ action, children, selected, value }: CmdKeyProps) {
   useEffect(() => {
     if (selected) {
       clearTimeout(keyboardTimer)
-      keyboardTimer = setTimeout(timeoutHandler, keyPressLag)
+      keyboardTimer = setTimeout(timeoutHandler, keySpeed)
     }
     return () => {
       clearTimeout(keyboardTimer)
@@ -188,6 +189,7 @@ function CmdKey({ action, children, selected, value }: CmdKeyProps) {
 }
 
 function TimerCounter({ children, ...otherProps }: BoxProps) {
+  const { keySpeed } = useKeyboardContext()
   const [timerValue, setTimerValue] = useState(0)
 
   let timerCounterIndex: number
@@ -208,7 +210,7 @@ function TimerCounter({ children, ...otherProps }: BoxProps) {
       timerCounterIndex = 0;
       clearInterval(timerConterTimeout);
       timerConterTimeout = null;
-    }, (keyPressLag - animationTime) / 100)
+    }, (keySpeed - animationTime) / 100)
   }, []);
 
   return (

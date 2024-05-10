@@ -1,4 +1,4 @@
-import theme from '../utils/theme';
+import theme from '@/utils/theme';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import KeyboardProvider from "./KeyboardProvider";
 

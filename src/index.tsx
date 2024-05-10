@@ -6,10 +6,9 @@ import {
   Routes
 } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
-import AppProvider from "./providers/AppProvider"
-import Home from './pages/Home';
-import TextEditor from './pages/TextEditor';
-
+import AppProvider from "@/providers/AppProvider"
+import Home from '@/pages/Home';
+import TextEditor from '@/pages/TextToSpeech';
 
 document.addEventListener('readystatechange', init);
 
@@ -22,7 +21,8 @@ function init() {
         <CssBaseline />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<TextEditor />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/texteditor" element={<TextEditor />} />
           </Routes>
         </BrowserRouter>
       </AppProvider>

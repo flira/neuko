@@ -1,8 +1,8 @@
-import type { Keyboard } from "src/types";
+import type { Keyboard } from "@/types"
 
-const textKeys: Keyboard.Key[][] = [];
+const textKeys: Keyboard.Key[][] = []
 
-textKeys.push(
+textKeys.push( // linha 1
   [
     { type: "none" },
     { type: "none" },
@@ -14,9 +14,9 @@ textKeys.push(
     { type: "none" },
     { type: "none" },
   ]
-);
+)
 
-textKeys.push(
+textKeys.push( // linha 2
   [
     { type: "none" },
     { type: "none" },
@@ -28,10 +28,10 @@ textKeys.push(
     { type: "none" },
     { type: "none" },
   ]
-);
+)
 
 
-textKeys.push(
+textKeys.push( // linha 3
   [
     { type: "none" },
     { type: "none" },
@@ -43,10 +43,10 @@ textKeys.push(
     { type: "none" },
     { type: "none" },
   ]
-);
+)
 
 
-textKeys.push(
+textKeys.push( // linha 4
   [
     {
       type: "cmd",
@@ -79,9 +79,9 @@ textKeys.push(
     },
     {
       type: "cmd",
-      value: "autocomplete",
-      label: "match_word",
-      action: () => {return}
+      value: "home",
+      label: "home",
+      action: () => location.assign("/")
     },
     { type: "neutral" },
     {
@@ -111,9 +111,9 @@ textKeys.push(
       action: () => {return}
     },
   ]
-);
+)
 
-textKeys.push(
+textKeys.push( // linha 5
   [
     { type: "none" },
     { type: "none" },
@@ -125,9 +125,9 @@ textKeys.push(
     { type: "none" },
     { type: "none" },
   ]
-);
+)
 
-textKeys.push(
+textKeys.push( // linha 6
   [
     { type: "none" },
     { type: "none" },
@@ -139,10 +139,10 @@ textKeys.push(
     { type: "none" },
     { type: "none" },
   ]
-);
+)
 
 
-textKeys.push(
+textKeys.push( // linha 7
   [
     { type: "none" },
     { type: "none" },
@@ -154,6 +154,6 @@ textKeys.push(
     { type: "none" },
     { type: "none" },
   ]
-);
+)
 
-export default textKeys;
+export default textKeys

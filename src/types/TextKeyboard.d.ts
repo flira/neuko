@@ -17,8 +17,7 @@ export namespace Keyboard {
   export interface CmdKey {
     type: "cmd"
     action: (cmdKeyAction: CmdKeyAction<Type>) => void
-    /** TODO: Define available commands */
-    value: "prev" | "shift" | "backspace" | "autocomplete" | "space" | "return" | "numpad" | "next"
+    value: string
     /** Material Symbols code */
     label: string
     selected?: boolean
@@ -40,11 +39,13 @@ export namespace Keyboard {
     autocomplete: string[]
     caps: Caps
     currentKey: KeyPosition
+    keySpeed: number
     layout: Layout
     textValue: string
     setAutocomplete: React.Dispatch<React.SetStateAction<string[]>>
     setCaps: React.Dispatch<React.SetStateAction<Caps>>
     setCurrentKey: React.Dispatch<React.SetStateAction<KeyPosition>>
+    setKeySpeed: React.Dispatch<React.SetStateAction<number>>
     setLayout: React.Dispatch<React.SetStateAction<Layout>>
     setTextValue: React.Dispatch<React.SetStateAction<string>>
   }
