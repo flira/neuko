@@ -7,7 +7,7 @@ appKeys.push([ // linha 1
         type: "cmd",
         value: "settings",
         label: "settings",
-        action: () => location.assign("/")
+        action: () => location.assign("/settings")
     },
     { type: "neutral" },
     {

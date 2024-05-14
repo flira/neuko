@@ -9,6 +9,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import AppProvider from "@/providers/AppProvider"
 import Home from '@/pages/Home';
 import TextEditor from '@/pages/TextToSpeech';
+import Settings from '@/pages/Settings';
 
 document.addEventListener('readystatechange', init);
 
@@ -22,6 +23,7 @@ function init() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/settings" element={<Settings />} />
             <Route path="/texteditor" element={<TextEditor />} />
           </Routes>
         </BrowserRouter>
