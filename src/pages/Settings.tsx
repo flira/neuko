@@ -6,7 +6,7 @@ import keyboardControl from "@/utils/keyboardControl"
 import { useKeyboardContext } from "@/providers/KeyboardProvider"
 import Layout from "@/components/Layout"
 import TextField from "@mui/material/TextField"
-import WS from "@/const/webservice"
+import WS from "@/const/WS"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
@@ -56,7 +56,7 @@ function SpeedSetting() {
 
   useEffect(() => {
     WS.onmessage = ({ data }) => {
-      const i = keySpeed;
+      const i = keySpeed
       switch (data) {
         default: break
         case "w":
@@ -82,7 +82,6 @@ function SpeedSetting() {
       }, keySpeed / 100
     )
     return () => {
-      console.log(2)
       clearInterval(timerConterTimeout)
       WS.onmessage = null
     }

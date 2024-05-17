@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-import Icon from "./Icon";
-import React, { useId } from "react";
+import Icon from "./Icon"
+import React, { useId } from "react"
 
 /** Nome da localização */
 type LayoutPropsKey = string
@@ -10,13 +10,13 @@ type LayoutPropsValue = string
 
 export interface LayoutProps {
   /** Serve para criar o breadcrumb */
-  location?: { [k: LayoutPropsKey]: LayoutPropsValue };
+  location?: { [k: LayoutPropsKey]: LayoutPropsValue }
 }
 
 export default function ({ location }: LayoutProps) {
-  const id = useId();
+  const id = useId()
   const Path: ({ id }: React.HTMLProps<Element>) => JSX.Element[] | undefined = id => location ? Object.entries(location)
-    .map(locationMap.bind(null, id)) : undefined;
+    .map(locationMap.bind(null, id)) : undefined
 
   return (
     <Box component="header" sx={{ pb: 2 }}>

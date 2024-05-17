@@ -81,6 +81,19 @@ const theme = createTheme({
           transition: "unset"
         }
       }
+    },
+    MuiLinearProgress: {
+      styleOverrides: {
+        root: {
+          transition: "unset",
+          "&::before": {
+            opacity: 0
+          }
+        },
+        bar: {
+          transition: "unset"
+        }
+      }
     }
   }
 });

@@ -17,12 +17,12 @@ export default async function (value: string) {
       })
     })
     if (!request.ok) {
-      console.error(request);
-      return;
+      console.error(request)
+      return
     }
-    return request.json() as Promise<Typewise.CompletionResponse>;
+    return request.json() as Promise<Typewise.CompletionResponse>
   } catch(err) {
-    console.error(err);
-    return;
+    console.error(err)
+    return
   }
 }

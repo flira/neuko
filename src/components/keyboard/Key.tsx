@@ -97,7 +97,7 @@ function CharKey({ children, selected }: CharKeyProps) {
   const timeoutHandler = () => {
     setTextValue(textValue + getValue())
     if (caps.active && !caps.locked) {
-      setCaps({ active: false, locked: false });
+      setCaps({ active: false, locked: false })
     }
     setCurrentKey([0, 0])
   }
@@ -236,19 +236,19 @@ function TimerCounter({ children, ...otherProps }: BoxProps) {
 
   useEffect(() => {
     if (timerConterTimeout) {
-      return;
+      return
     }
     timerCounterIndex = 0
     timerConterTimeout = setInterval(() => {
       if (timerCounterIndex < 100) {
-        setTimerValue(++timerCounterIndex);
-        return;
+        setTimerValue(++timerCounterIndex)
+        return
       }
-      setTimerValue(100);
-      timerCounterIndex = 0;
-      clearInterval(timerConterTimeout);
+      setTimerValue(100)
+      timerCounterIndex = 0
+      clearInterval(timerConterTimeout)
     }, (keySpeed - animationTime) / 100)
-  }, []);
+  }, [])
 
   return (
     <Box

@@ -2,9 +2,10 @@ import Layout from "@/components/Layout"
 import fetchAutocomplete from "@/utils/fetchAutocomplete"
 import { useKeyboardContext } from "@/providers/KeyboardProvider"
 import { TextKeyboard } from "@/components/keyboard"
-import Box from "@mui/material/Box";
+import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-import Suggestion from "@/components/keyboard/Suggestion";
+import Suggestion from "@/components/keyboard/Suggestion"
+import HTML_IDS from "@/const/HTML_IDS"
 import { useEffect } from "react"
 
 /**
@@ -49,15 +50,16 @@ export default function () {
             position: "absolute",
             width: "100%"
           }}>
-            <ol>
-              {autocomplete.map((prediction, i, arr) => (
-                <li key={`autocomplete-prediction-${i}`}>
-                  <Suggestion position={[0, (arr.length + 3) - i]}>
-                    {prediction}
-                  </Suggestion>
-                </li>
-              ))}
-            </ol>
+            {autocomplete.length ?
+              <ol id={HTML_IDS.AUTOCOMPLETE_LIST}>
+                {autocomplete.map((prediction, i, arr) => (
+                  <li key={`autocomplete-prediction-${i}`}>
+                    <Suggestion position={[0, (arr.length + 3) - i]}>
+                      {prediction}
+                    </Suggestion>
+                  </li>
+                ))}
+              </ol> : ""}
           </Box>
         </Box>
       </TextKeyboard>

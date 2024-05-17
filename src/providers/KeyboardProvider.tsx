@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react"
 import type { Keyboard } from "@/types"
 
-const defaultCaps: Keyboard.Caps = { active: false, locked: false };
+const defaultCaps: Keyboard.Caps = { active: false, locked: false }
 const defaultLayout: Keyboard.Layout = "navigation"
 const defaultKeySpeed = 500
 
@@ -18,9 +18,9 @@ const KeyboardContext = createContext<Keyboard.KeyboardContext>({
   setKeySpeed: () => 0,
   setLayout: () => defaultLayout,
   setTextValue: () => [],
-});
+})
 
-export const useKeyboardContext = () => useContext(KeyboardContext);
+export const useKeyboardContext = () => useContext(KeyboardContext)
 
 export default function ({ children }: {children: React.ReactNode}) {
   const [caps, setCaps] = useState<Keyboard.Caps>(defaultCaps)

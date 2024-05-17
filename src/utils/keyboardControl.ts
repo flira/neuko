@@ -1,6 +1,6 @@
-import keyExists from "./keyExists";
-import WS from "@/const/webservice";
-import type { Keyboard } from "@/types";
+import keyExists from "./keyExists"
+import WS from "@/const/WS"
+import type { Keyboard } from "@/types"
 
 /**
  * Adiciona controle por webservice nos teclados virtuais.
@@ -9,7 +9,7 @@ import type { Keyboard } from "@/types";
  * @param setCurrentKey @see {@link useKeyboardContext}
  * @example
  * ``` jsx
- * const {currentKey, setCurrentKey} = useKeyboardContext();
+ * const {currentKey, setCurrentKey} = useKeyboardContext()
  * useEffect(keyboardControl.bind(null, currentKey, setCurrentKey))
  * ```
  */

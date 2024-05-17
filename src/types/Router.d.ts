@@ -1,5 +1,5 @@
 export interface RouteProps {
-  matches?: object;
-  path?: string;
-  url?: string;
+  matches?: object
+  path?: string
+  url?: string
 }

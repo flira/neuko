@@ -1,21 +1,21 @@
-import { StrictMode } from 'react';
-import ReactDOM from 'react-dom/client';
+import { StrictMode } from 'react'
+import ReactDOM from 'react-dom/client'
 import {
   BrowserRouter,
   Route,
   Routes
-} from 'react-router-dom';
-import CssBaseline from '@mui/material/CssBaseline';
+} from 'react-router-dom'
+import CssBaseline from '@mui/material/CssBaseline'
 import AppProvider from "@/providers/AppProvider"
-import Home from '@/pages/Home';
-import TextEditor from '@/pages/TextToSpeech';
-import Settings from '@/pages/Settings';
+import Home from '@/pages/Home'
+import TextEditor from '@/pages/TextToSpeech'
+import Settings from '@/pages/Settings'
 
-document.addEventListener('readystatechange', init);
+document.addEventListener('readystatechange', init)
 
 function init() {
-  const root = document.createElement('div');
-  root.setAttribute("style", "display: flex; flex-grow: 1");
+  const root = document.createElement('div')
+  root.setAttribute("style", "display: flex; flex-grow: 1")
   ReactDOM.createRoot(root).render(
     <StrictMode>
       <AppProvider>
@@ -30,7 +30,7 @@ function init() {
       </AppProvider>
     </StrictMode>
   )
-  document.body.appendChild(root);
+  document.body.appendChild(root)
 }
 
 

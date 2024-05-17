@@ -22,7 +22,7 @@ const IconRoot = styled("span", {
   name: "MuiIcon",
   slot: "root"
 })<{ ownerState: IconProps }>(props => {
-  const { fill, grade, opticalSize, size, variant, weight } = props.ownerState;
+  const { fill, grade, opticalSize, size, variant, weight } = props.ownerState
   return {
     direction: "ltr",
     display: "inline-block",

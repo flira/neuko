@@ -1,4 +1,5 @@
 import keyExists from "@/utils/keyExists"
+import HTML_IDS from "@/const/HTML_IDS"
 import type { Keyboard } from "@/types"
 
 const textKeys: Keyboard.Key[][] = []
@@ -86,14 +87,17 @@ textKeys.push( // linha 4
       setter: "position",
       value: "autocomplete",
       label: "format_list_numbered",
-      action: ({ value, setter }: Keyboard.CmdKeyAction<Keyboard.KeyPosition>) => {
+      action: ({ setter }: Keyboard.CmdKeyAction<Keyboard.KeyPosition>) => {
+        if (!document.getElementById(HTML_IDS.AUTOCOMPLETE_LIST)) {
+          setter([0, 0])
+          return
+        }
         const newKey: Keyboard.KeyPosition = [0, 20]
         if (!keyExists(newKey)) {
           while (!keyExists(newKey)) {
             --newKey[1]
           }
         }
-        console.log(value);
         setter(newKey)
       }
     },
