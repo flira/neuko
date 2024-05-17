@@ -4,8 +4,8 @@ import { useKeyboardContext } from "@/providers/KeyboardProvider"
 import { TextKeyboard } from "@/components/keyboard"
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography"
+import Suggestion from "@/components/keyboard/Suggestion";
 import { useEffect } from "react"
-import { Typewise } from "@/types";
 
 /**
  * @TODO Tentar implementar TTS:
@@ -29,7 +29,7 @@ export default function () {
   return (
     <Layout location={{ "Texto para fala": "text_to_speech" }}>
       <TextKeyboard>
-        <div>
+        <Box sx={{ position: "relative" }}>
           <Box
             component="div"
             sx={{
@@ -45,18 +45,21 @@ export default function () {
               }}>|</Typography>
             </Typography>
           </Box>
-          <Box component="div" sx={{ position: "absolute" }}>
+          <Box component="div" sx={{
+            position: "absolute",
+            width: "100%"
+          }}>
             <ol>
-              {autocomplete.map((prediction, i) => (
+              {autocomplete.map((prediction, i, arr) => (
                 <li key={`autocomplete-prediction-${i}`}>
-                  <div>
+                  <Suggestion position={[0, (arr.length + 3) - i]}>
                     {prediction}
-                  </div>
+                  </Suggestion>
                 </li>
               ))}
             </ol>
           </Box>
-        </div>
+        </Box>
       </TextKeyboard>
     </Layout>
   )

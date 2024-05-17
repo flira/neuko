@@ -1,5 +1,5 @@
 import keyExists from "./keyExists";
-import { useKeyboardContext } from "@/providers/KeyboardProvider"
+import WS from "@/const/webservice";
 import type { Keyboard } from "@/types";
 
 /**
@@ -16,39 +16,54 @@ import type { Keyboard } from "@/types";
 function keyboardControl(
     currentKey: Keyboard.KeyPosition,
     setCurrentKey: React.Dispatch<React.SetStateAction<Keyboard.KeyPosition>>) {
-    const ws = new WebSocket('ws://localhost:1337', 'App')
-    ws.onmessage = ({ data }) => {
+    WS.onmessage = ({ data }) => {
         const newKey: Keyboard.KeyPosition = [...currentKey]
+        const l = 20
         switch (data) {
             default: break
             case "w":
-                --newKey[1]
-                keyExists(newKey) ?
-                    setCurrentKey(newKey) :
-                    setCurrentKey([currentKey[0], -1 * currentKey[1]])
+                ++newKey[1]
+                if (!keyExists(newKey)) {
+                    newKey[1] = -l
+                    while (!keyExists(newKey)) {
+                        ++newKey[1]
+                    }
+                }
+                setCurrentKey(newKey)
                 break
             case "a":
                 --newKey[0]
-                keyExists(newKey) ?
-                    setCurrentKey(newKey) :
-                    setCurrentKey([-1 * currentKey[0], currentKey[1]])
+                if (!keyExists(newKey)) {
+                    newKey[0] = l
+                    while (!keyExists(newKey)) {
+                        --newKey[0]
+                    }
+                }
+                setCurrentKey(newKey)
                 break
             case "s":
-                ++newKey[1]
-                keyExists(newKey) ?
-                    setCurrentKey(newKey) :
-                    setCurrentKey([currentKey[0], -1 * currentKey[1]])
+                --newKey[1]
+                if (!keyExists(newKey)) {
+                    newKey[1] = l
+                    while (!keyExists(newKey)) {
+                        --newKey[1]
+                    }
+                }
+                setCurrentKey(newKey)
                 break
             case "d":
                 ++newKey[0]
-                keyExists(newKey) ?
-                    setCurrentKey(newKey) :
-                    setCurrentKey([-1 * currentKey[0], currentKey[1]])
-                break
+                if (!keyExists(newKey)) {
+                    newKey[0] = -l
+                    while (!keyExists(newKey)) {
+                        ++newKey[0]
+                    }
+                }
+                setCurrentKey(newKey)
         }
     }
     return () => {
-        ws.close()
+        WS.onmessage = null
     }
 }
 

@@ -1,3 +1,4 @@
+import keyExists from "@/utils/keyExists"
 import type { Keyboard } from "@/types"
 
 const textKeys: Keyboard.Key[][] = []
@@ -50,45 +51,58 @@ textKeys.push( // linha 4
   [
     {
       type: "cmd",
-      value: "prev",
-      label: "chevron_left",
-      action: () => {return}
-    },
-    {
-      type: "cmd",
-      value: "shift",
-      label: "shift",
-      action: ({value: {active, locked}, setter}:
-        Keyboard.CmdKeyAction<Keyboard.Caps>) => {
-        if (!active && !locked) {
-          setter({active: true, locked: false})
-        } else if (active && !locked) {
-          setter({active: true, locked: true})
-        } else {
-          setter({active: false, locked: false})
-        }
+      value: "clear all",
+      label: "delete_forever",
+      action: ({ setter }: Keyboard.CmdKeyAction<string>) => {
+        setter("")
       }
     },
     {
       type: "cmd",
       value: "backspace",
       label: "backspace",
-      action: ({value, setter}: Keyboard.CmdKeyAction<string>) => {
+      action: ({ value, setter }: Keyboard.CmdKeyAction<string>) => {
         setter(value.substring(0, value.length - 1))
       }
     },
     {
       type: "cmd",
-      value: "home",
-      label: "home",
-      action: () => location.assign("/")
+      setter: "shift",
+      value: "shift",
+      label: "shift",
+      action: ({ value: { active, locked }, setter }:
+        Keyboard.CmdKeyAction<Keyboard.Caps>) => {
+        if (!active && !locked) {
+          setter({ active: true, locked: false })
+        } else if (active && !locked) {
+          setter({ active: true, locked: true })
+        } else {
+          setter({ active: false, locked: false })
+        }
+      }
+    },
+    {
+      type: "cmd",
+      setter: "position",
+      value: "autocomplete",
+      label: "format_list_numbered",
+      action: ({ value, setter }: Keyboard.CmdKeyAction<Keyboard.KeyPosition>) => {
+        const newKey: Keyboard.KeyPosition = [0, 20]
+        if (!keyExists(newKey)) {
+          while (!keyExists(newKey)) {
+            --newKey[1]
+          }
+        }
+        console.log(value);
+        setter(newKey)
+      }
     },
     { type: "neutral" },
     {
       type: "cmd",
       value: "space",
       label: "space_bar",
-      action: ({value, setter}: Keyboard.CmdKeyAction<string>) => {
+      action: ({ value, setter }: Keyboard.CmdKeyAction<string>) => {
         setter(`${value} `)
       }
     },
@@ -96,20 +110,21 @@ textKeys.push( // linha 4
       type: "cmd",
       value: "return",
       label: "keyboard_return",
-      action: () => {return}
+      action: () => { return }
     },
     {
       type: "cmd",
       value: "numpad",
       label: "123",
-      action: () => {return}
+      action: () => { return }
     },
     {
       type: "cmd",
-      value: "next",
-      label: "chevron_right",
-      action: () => {return}
-    },
+      setter: "location",
+      value: "home",
+      label: "home",
+      action: (navigate) => navigate("/")
+    }
   ]
 )
 

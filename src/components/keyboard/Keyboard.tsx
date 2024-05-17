@@ -5,8 +5,8 @@ import keyboardMap from "@/utils/keyboardMap"
 import React, { useEffect } from "react"
 import { useKeyboardContext } from "@/providers/KeyboardProvider"
 
-export function TextKeyboard({ children }: {children: React.ReactNode}) {
-  const {currentKey, setCurrentKey} = useKeyboardContext()
+export function TextKeyboard({ children }: { children: React.ReactNode }) {
+  const { currentKey, setCurrentKey } = useKeyboardContext()
   useEffect(keyboardControl.bind(null, currentKey, setCurrentKey))
 
   return (
@@ -22,7 +22,9 @@ export function TextKeyboard({ children }: {children: React.ReactNode}) {
       }}>
         {children}
       </Box>
-      {textKeys.map(keyboardMap)}
+      <Box>
+        {textKeys.map(keyboardMap)}
+      </Box>
     </Box>
   )
 }

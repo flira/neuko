@@ -1,3 +1,5 @@
+import type { NavigateFunction } from "react-router-dom"
+
 export namespace Keyboard {
   export interface BlankKey {
     type: "none"
@@ -9,18 +11,36 @@ export namespace Keyboard {
     selected?: boolean
   }
 
-  interface CmdKeyAction<Type>  {
+  interface CmdKeyAction<Type> {
     value: Type
-    setter?: React.Dispatch<React.SetStateAction<Type>>
+    setter: React.Dispatch<React.SetStateAction<Type>>
   }
 
-  export interface CmdKey {
+  interface CmdKeyTemplate {
     type: "cmd"
-    action: (cmdKeyAction: CmdKeyAction<Type>) => void
     value: string
     /** Material Symbols code */
     label: string
     selected?: boolean
+  }
+  export interface CmdKey extends CmdKeyTemplate {
+    action: (prop: CmdKeyAction<string>) => void
+  }
+
+  export interface CmdLocationtKey extends CmdKeyTemplate {
+    setter: "location"
+    action: (navigate: NavigateFunction) => void
+  }
+
+  export interface CmdPositionKey extends CmdKeyTemplate {
+    setter: "position"
+    action: (prop: CmdKeyAction<Keyboard.KeyPosition>) => void
+  }
+
+
+  export interface CmdShiftKey extends CmdKeyTemplate {
+    setter: "shift"
+    action: (prop: CmdKeyAction<Keyboard.Caps>) => void
   }
 
   export interface NeutralKey {
@@ -50,5 +70,12 @@ export namespace Keyboard {
     setTextValue: React.Dispatch<React.SetStateAction<string>>
   }
 
-  export type Key = BlankKey | CharKey | CmdKey | NeutralKey
+  export type Key =
+    BlankKey |
+    CharKey |
+    CmdKey |
+    CmdPositionKey |
+    CmdLocationtKey |
+    CmdShiftKey |
+    NeutralKey
 }

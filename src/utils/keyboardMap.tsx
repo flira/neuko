@@ -20,7 +20,7 @@ function keyMap(y: number, keyset: Keyboard.Key[][], key: Keyboard.Key, x: numbe
   const numCols = keyset[0]?.length
   const position = [
     (x - (Math.floor(numCols / 2))),
-    (y - (Math.floor(numRows / 2)))
+    -1 * (y - ( Math.floor(numRows / 2)))
   ] as Keyboard.KeyPosition
   return <Key
     key={btoa(`key-${(y * numCols) + x}`)}

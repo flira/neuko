@@ -1,6 +1,6 @@
-import theme from '@/utils/theme';
-import ThemeProvider from '@mui/material/styles/ThemeProvider';
-import KeyboardProvider from "./KeyboardProvider";
+import theme from '@/utils/theme'
+import ThemeProvider from '@mui/material/styles/ThemeProvider'
+import KeyboardProvider from "./KeyboardProvider"
 
 export default function ({ children }: React.HTMLProps<Element>) {
   return (

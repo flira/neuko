@@ -27,6 +27,10 @@ const theme = createTheme({
         em, .italic {
           font-variation-settings: "slnt" -10;
         }
+        ol {
+          padding-inline-start: 0;
+          width: 100%;
+        }
         [aria-label*="Breadcrump"] .MuiBox-root::before{
           content: "chevron_right";
           direction: ltr;

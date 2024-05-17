@@ -1,8 +1,9 @@
 import { Box, CircularProgress } from "@mui/material"
-import { cyan } from "@mui/material/colors"
+import { lightGreen } from "@mui/material/colors"
 import { Icon } from "@/components/Icon"
 import { useEffect, useState } from "react"
 import { useKeyboardContext } from "@/providers/KeyboardProvider"
+import { NavigateFunction, useNavigate } from "react-router-dom"
 import type { Keyboard } from "@/types"
 import type { BoxProps } from "@mui/material"
 
@@ -33,7 +34,7 @@ export default function Key({ keyData: key, position }: KeyProps) {
         textAlign: "center",
         width: "1.6em",
         ...(isSelected ? {
-          bgcolor: cyan.A100
+          bgcolor: lightGreen.A200
         } : {})
       }}>
       {children}
@@ -56,6 +57,7 @@ export default function Key({ keyData: key, position }: KeyProps) {
       return (
         <Container data-x={position[0]} data-y={position[1]}>
           <CmdKey
+            setter={"setter" in key ? key.setter : undefined}
             action={key.action}
             selected={isSelected}
             value={key.value}>
@@ -121,28 +123,62 @@ function CharKey({ children, selected }: CharKeyProps) {
   )
 }
 
-interface CmdKeyProps {
+interface CmdKeyPropsTemplate {
   children: string
   selected: boolean
   value: string
-  action: (cmdKeyAction: Keyboard.CmdKeyAction<string | Keyboard.Caps>) => void
+}
+interface DefaultCmdKeyProps extends CmdKeyPropsTemplate {
+  action: (cmdKeyAction: Keyboard.CmdKeyAction<string>) => void
+  setter: undefined
 }
 
-function CmdKey({ action, children, selected, value }: CmdKeyProps) {
+interface CmdShiftKeyProps extends CmdKeyPropsTemplate {
+  action: (cmdKeyAction: Keyboard.CmdKeyAction<Keyboard.Caps>) => void
+  setter: "shift"
+}
+
+interface CmdPositionKeyProps extends CmdKeyPropsTemplate {
+  action: (cmdKeyAction: Keyboard.CmdKeyAction<Keyboard.KeyPosition>) => void
+  setter: "position"
+}
+
+interface CmdLocationKeyProps extends CmdKeyPropsTemplate {
+  action: (navigate: NavigateFunction) => void
+  setter: "location"
+}
+
+type CmdKeyProps =
+  DefaultCmdKeyProps |
+  CmdLocationKeyProps |
+  CmdPositionKeyProps |
+  CmdShiftKeyProps
+
+function CmdKey(
+  { action, children, selected, setter, value }: CmdKeyProps
+) {
   const {
     caps,
+    currentKey,
     keySpeed,
     setCaps,
     setCurrentKey,
     setTextValue,
     textValue } = useKeyboardContext()
-
-  function actionReducer(): Keyboard.CmdKeyAction<string | Keyboard.Caps> {
-    switch (value) {
+  const navigate = useNavigate()
+  function actionReducer() {
+    switch (setter) {
       default:
         return {
           value: textValue,
           setter: setTextValue
+        }
+      case "location":
+        return navigate
+      case "position":
+        return {
+          value: currentKey,
+          setter: setCurrentKey
         }
       case "shift":
         return {
@@ -154,7 +190,9 @@ function CmdKey({ action, children, selected, value }: CmdKeyProps) {
 
   const timeoutHandler = () => {
     action(actionReducer())
-    setCurrentKey([0, 0])
+    if (setter !== "position") {
+      setCurrentKey([0, 0])
+    }
   }
 
   useEffect(() => {
@@ -209,7 +247,6 @@ function TimerCounter({ children, ...otherProps }: BoxProps) {
       setTimerValue(100);
       timerCounterIndex = 0;
       clearInterval(timerConterTimeout);
-      timerConterTimeout = null;
     }, (keySpeed - animationTime) / 100)
   }, []);
 
