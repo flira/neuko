@@ -19,7 +19,17 @@ export default function () {
   useEffect(() => {
     if (value.length) {
       fetchAutocomplete(value).then(suggestions => {
-        const ac = !suggestions ? [] : suggestions.predictions.map(({ text }) => text)
+        const ac = !suggestions ? [] : suggestions.predictions.map(({ text }) => {
+          const arr = Array.from(text)
+          const words = value.split(" ");
+          Array.from(words[words.length - 1]).forEach((letter, i) => {
+            const code = letter.charCodeAt(0)
+            if ((code < 97) || (code > 122 && code < 224)) {
+              arr[i] = arr[i].toUpperCase()
+            }
+          })
+          return arr.reduce((previous, current) => previous + current)
+        })
         setAutocomplete(ac)
       })
     } else {
