@@ -21,7 +21,7 @@ export default function () {
       fetchAutocomplete(value).then(suggestions => {
         const ac = !suggestions ? [] : suggestions.predictions.map(({ text }) => {
           const arr = Array.from(text)
-          const words = value.split(" ");
+          const words = value.split(" ")
           Array.from(words[words.length - 1]).forEach((letter, i) => {
             const code = letter.charCodeAt(0)
             if ((code < 97) || (code > 122 && code < 224)) {

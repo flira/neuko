@@ -51,7 +51,6 @@ let timerConterTimeout: NodeJS.Timeout
 function SpeedSetting() {
   const { currentKey, keySpeed, setCurrentKey, setKeySpeed } = useKeyboardContext()
   const [timerValue, setTimerValue] = useState(0)
-  const label = "Velocidade do teclado"
   const focused = currentKey.toString() === "1,0"
 
   useEffect(() => {
@@ -100,24 +99,38 @@ function SpeedSetting() {
         flexDirection: "column",
         ml: "1em"
       }}>
-        {focused && <Icon>keyboard_arrow_up</Icon>}
-        <TextField
-          focused={focused}
-          helperText="Em segundos"
-          id={btoa(label)}
-          label={label}
-          type="number"
-          value={(keySpeed / 1e3)}
-          variant="standard"
-          sx={{ width: "6.5em" }} />
-        {focused && <Icon>keyboard_arrow_down</Icon>}
+        <Box sx={{
+          alignItems: "center",
+          display: "flex",
+        }}>
+          <Box sx={{fontWeight: 600}}>
+            Velocidade do teclado
+          </Box>
+          <Box sx={{
+            alignItems: "center",
+            display: "flex",
+            flexDirection: "column",
+            ml: "1em"
+          }}>
+            {focused && <Icon>keyboard_arrow_up</Icon>}
+            <TextField
+              focused={focused}
+              id={btoa("input-segundosd")}
+              label={"Segundos"}
+              type="number"
+              value={(keySpeed / 1e3)}
+              variant="standard"
+              sx={{ width: "6.5em" }} />
+            {focused && <Icon>keyboard_arrow_down</Icon>}
+          </Box>
+          {focused && <CircularProgress
+            color="primary"
+            size={"1.6em"}
+            value={timerValue}
+            variant="determinate"
+          />}
+        </Box>
       </Box>
-      {focused && <CircularProgress
-        color="primary"
-        size={"1.6em"}
-        value={timerValue}
-        variant="determinate"
-      />}
     </Box>
   )
 }

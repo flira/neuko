@@ -52,6 +52,13 @@ textKeys.push( // linha 4
   [
     {
       type: "cmd",
+      setter: "location",
+      value: "home",
+      label: "home",
+      action: (navigate) => navigate("/")
+    },
+    {
+      type: "cmd",
       value: "clear all",
       label: "delete_forever",
       action: ({ setter }: Keyboard.CmdKeyAction<string>) => {
@@ -64,22 +71,6 @@ textKeys.push( // linha 4
       label: "backspace",
       action: ({ value, setter }: Keyboard.CmdKeyAction<string>) => {
         setter(value.substring(0, value.length - 1))
-      }
-    },
-    {
-      type: "cmd",
-      setter: "shift",
-      value: "shift",
-      label: "shift",
-      action: ({ value: { active, locked }, setter }:
-        Keyboard.CmdKeyAction<Keyboard.Caps>) => {
-        if (!active && !locked) {
-          setter({ active: true, locked: false })
-        } else if (active && !locked) {
-          setter({ active: true, locked: true })
-        } else {
-          setter({ active: false, locked: false })
-        }
       }
     },
     {
@@ -118,17 +109,27 @@ textKeys.push( // linha 4
     },
     {
       type: "cmd",
+      setter: "shift",
+      value: "shift",
+      label: "shift",
+      action: ({ value: { active, locked }, setter }:
+        Keyboard.CmdKeyAction<Keyboard.Caps>) => {
+        if (!active && !locked) {
+          setter({ active: true, locked: false })
+        } else if (active && !locked) {
+          setter({ active: true, locked: true })
+        } else {
+          setter({ active: false, locked: false })
+        }
+      }
+    },
+    {
+      type: "cmd",
       value: "numpad",
       label: "123",
       action: () => { return }
     },
-    {
-      type: "cmd",
-      setter: "location",
-      value: "home",
-      label: "home",
-      action: (navigate) => navigate("/")
-    }
+
   ]
 )
 

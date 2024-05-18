@@ -3,7 +3,7 @@ import type { Keyboard } from "@/types"
 
 const defaultCaps: Keyboard.Caps = { active: false, locked: false }
 const defaultLayout: Keyboard.Layout = "navigation"
-const defaultKeySpeed = 500
+const defaultKeySpeed = 1250
 
 const KeyboardContext = createContext<Keyboard.KeyboardContext>({
   autocomplete: [],
