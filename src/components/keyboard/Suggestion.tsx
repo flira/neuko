@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box"
 import LinearProgress from "@mui/material/LinearProgress"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { lightGreen } from "@mui/material/colors"
 import { useKeyboardContext } from "@/providers/KeyboardProvider"
 import { Keyboard } from "@/types"
@@ -46,12 +46,10 @@ export default function ({ children, position }: SuggestionProps) {
     }
 
     useEffect(() => {
-        if (!focused) {
-            resetTimer()
-        } else {
-            timerCounterIndex = 0
+        if (focused) {
             timerConterTimeout = setInterval(intervalHandler, (keySpeed) / 100)
         }
+        return resetTimer
     }, [focused])
 
     useEffect(() => {
