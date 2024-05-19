@@ -53,13 +53,14 @@ export default function ({ children, position }: SuggestionProps) {
     }, [focused])
 
     useEffect(() => {
-        if (focused && timerValue === 100) {
+        if (focused && timerValue === 100) { 
+            const lastEntry = [...textValue].pop() as string
             const newValue =
                 !textValue.length ? children :
-                    /\s$/.test(textValue) ?
-                        `${textValue}${children}` :
-                        textValue.replace(/([\S]+)$/, ` ${children}`);
-            setTextValue(`${newValue} `)
+                    /\s$/.test(lastEntry) ?
+                        `${lastEntry}${children}` :
+                        lastEntry.replace(/([\S]+)$/, ` ${children}`);
+            setTextValue([...textValue, `${newValue} `])
             setCurrentKey([0, 0])
         }
     }, [timerValue])

@@ -6,6 +6,7 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Suggestion from "@/components/keyboard/Suggestion"
 import HTML_IDS from "@/const/HTML_IDS"
+import isUppercase from "@/utils/isUpperCase"
 import { useEffect } from "react"
 
 /**
@@ -14,28 +15,24 @@ import { useEffect } from "react"
  */
 
 export default function () {
-  const { autocomplete, textValue: value, setAutocomplete } = useKeyboardContext()
+  const { autocomplete, textValue, setAutocomplete } = useKeyboardContext()
 
   useEffect(() => {
-    if (value.length) {
-      fetchAutocomplete(value).then(suggestions => {
+    const lastEntry = [...textValue].pop()
+    if (lastEntry) {
+      fetchAutocomplete(lastEntry).then(suggestions => {
         const ac = !suggestions ? [] : suggestions.predictions.map(({ text }) => {
-          const arr = Array.from(text)
-          const words = value.split(" ")
-          Array.from(words[words.length - 1]).forEach((letter, i) => {
-            const code = letter.charCodeAt(0)
-            if ((code < 97) || (code > 122 && code < 224)) {
-              arr[i] = arr[i].toUpperCase()
-            }
-          })
-          return arr.reduce((previous, current) => previous + current)
+          const lastWord = lastEntry.split(" ").pop()
+          if (!lastWord || !isUppercase(lastWord)) return text
+          if (isUppercase(lastWord[1])) return text.toLocaleUpperCase()
+          return text[0].toUpperCase() + text.substring(1)
         })
         setAutocomplete(ac)
       })
     } else {
       setAutocomplete([])
     }
-  }, [value])
+  }, [textValue])
 
   return (
     <Layout location={{ "Texto para fala": "text_to_speech" }}>
@@ -49,7 +46,7 @@ export default function () {
               pb: 4
             }}>
             <Typography component="div" variant="h1">
-              {value}
+              {[...textValue].pop()}
               <Typography component="span" variant="h1" sx={{
                 animation: "1.25s linear textcursor infinite",
                 fontWeight: 400

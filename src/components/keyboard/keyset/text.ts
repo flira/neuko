@@ -59,18 +59,23 @@ textKeys.push( // linha 4
     },
     {
       type: "cmd",
-      value: "clear all",
-      label: "delete_forever",
-      action: ({ setter }: Keyboard.CmdKeyAction<string>) => {
-        setter("")
+      value: "undo",
+      label: "undo",
+      action: ({ value, setter }: Keyboard.CmdKeyAction<string[]>) => {
+        const cp = [...value]
+        if (cp.length > 1) cp.pop()
+        setter(cp)
       }
     },
     {
       type: "cmd",
       value: "backspace",
       label: "backspace",
-      action: ({ value, setter }: Keyboard.CmdKeyAction<string>) => {
-        setter(value.substring(0, value.length - 1))
+      action: ({ value, setter }: Keyboard.CmdKeyAction<string[]>) => {
+        const lastEntry = [...value].pop()
+        const newEntry = lastEntry ?
+        lastEntry.substring(0, lastEntry.length - 1) : ""
+        setter([...value, newEntry])
       }
     },
     {
@@ -97,8 +102,10 @@ textKeys.push( // linha 4
       type: "cmd",
       value: "space",
       label: "space_bar",
-      action: ({ value, setter }: Keyboard.CmdKeyAction<string>) => {
-        setter(`${value} `)
+      action: ({ value, setter }: Keyboard.CmdKeyAction<string[]>) => {
+        const lastEntry = [...value].pop()
+        const newEntry = lastEntry ? `${lastEntry} ` : " "
+        setter([...value, newEntry])
       }
     },
     {

@@ -24,7 +24,7 @@ export namespace Keyboard {
     selected?: boolean
   }
   export interface CmdKey extends CmdKeyTemplate {
-    action: (prop: CmdKeyAction<string>) => void
+    action: (prop: CmdKeyAction<string[]>) => void
   }
 
   export interface CmdLocationtKey extends CmdKeyTemplate {
@@ -61,13 +61,13 @@ export namespace Keyboard {
     currentKey: KeyPosition
     keySpeed: number
     layout: Layout
-    textValue: string
+    textValue: string[]
     setAutocomplete: React.Dispatch<React.SetStateAction<string[]>>
     setCaps: React.Dispatch<React.SetStateAction<Caps>>
     setCurrentKey: React.Dispatch<React.SetStateAction<KeyPosition>>
     setKeySpeed: React.Dispatch<React.SetStateAction<number>>
     setLayout: React.Dispatch<React.SetStateAction<Layout>>
-    setTextValue: React.Dispatch<React.SetStateAction<string>>
+    setTextValue: React.Dispatch<React.SetStateAction<string[]>>
   }
 
   export type Key =

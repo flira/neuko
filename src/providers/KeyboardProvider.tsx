@@ -12,12 +12,12 @@ const KeyboardContext = createContext<Keyboard.KeyboardContext>({
   keySpeed: defaultKeySpeed,
   layout: defaultLayout,
   setAutocomplete: () => [],
-  textValue: "",
+  textValue: [""],
   setCaps: () => defaultCaps,
   setCurrentKey: () => "",
   setKeySpeed: () => 0,
   setLayout: () => defaultLayout,
-  setTextValue: () => [],
+  setTextValue: () => [""],
 })
 
 export const useKeyboardContext = () => useContext(KeyboardContext)
@@ -27,7 +27,7 @@ export default function ({ children }: {children: React.ReactNode}) {
   const [currentKey, setCurrentKey] = useState<Keyboard.KeyPosition>([0, 0])
   const [keySpeed, setKeySpeed] = useState(defaultKeySpeed)
   const [layout, setLayout] = useState<Keyboard.Layout>(defaultLayout)
-  const [textValue, setTextValue] = useState<string>("")
+  const [textValue, setTextValue] = useState<string[]>([""])
   const [autocomplete, setAutocomplete] = useState<string[]>([])
 
   return (

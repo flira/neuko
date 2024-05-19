@@ -95,7 +95,8 @@ function CharKey({ children, selected }: CharKeyProps) {
   const getValue = () => caps.active ? children.toUpperCase() : children
 
   const timeoutHandler = () => {
-    setTextValue(textValue + getValue())
+    const newEntry = [...textValue].pop() + getValue()
+    setTextValue([...textValue, newEntry])
     if (caps.active && !caps.locked) {
       setCaps({ active: false, locked: false })
     }
@@ -129,7 +130,7 @@ interface CmdKeyPropsTemplate {
   value: string
 }
 interface DefaultCmdKeyProps extends CmdKeyPropsTemplate {
-  action: (cmdKeyAction: Keyboard.CmdKeyAction<string>) => void
+  action: (cmdKeyAction: Keyboard.CmdKeyAction<string[]>) => void
   setter: undefined
 }
 
