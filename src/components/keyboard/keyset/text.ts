@@ -1,5 +1,6 @@
 import keyExists from "@/utils/keyExists"
-import HTML_IDS from "@/const/HTML_IDS"
+import KEYBOARD from "@/const/KEYBOARD"
+import PREDICTIONS from "@/const/PREDICTIONS"
 import localPredictions from "@/utils/localPredictions"
 import type { Keyboard } from "@/types"
 
@@ -53,93 +54,108 @@ textKeys.push( // linha 4
   [
     {
       type: "cmd",
-      setter: "location",
-      value: "home",
       label: "home",
-      action: (navigate) => navigate("/")
+      action: ({ navigate }) => navigate("/")
     },
     {
       type: "cmd",
-      value: "undo",
       label: "undo",
-      action: ({ value, setter }: Keyboard.CmdKeyAction<string[]>) => {
-        const cp = [...value]
+      action: ({ textValue, setTextValue }) => {
+        const cp = [...textValue]
         if (cp.length > 1) cp.pop()
-        setter(cp)
+        setTextValue(cp)
       }
     },
     {
       type: "cmd",
-      value: "backspace",
       label: "backspace",
-      action: ({ value, setter }: Keyboard.CmdKeyAction<string[]>) => {
-        const lastEntry = [...value].pop()
-        const newEntry = lastEntry ?
-          lastEntry.substring(0, lastEntry.length - 1) : ""
-        setter([...value, newEntry])
+      value: {
+        shift: {
+          fill: true
+        },
+        caps: {
+          fill: true,
+          label: "delete_forever"
+        }
+      },
+      action: ({ caps: { active, locked }, textValue, setCaps, setTextValue }) => {
+        const lastEntry = [...textValue].pop() ?? ""
+        let newEntry = ""
+        if (!active && !locked) {
+          newEntry = lastEntry.substring(0, lastEntry.length - 1)
+        } else if (locked) {
+          newEntry = ""
+        } else {
+          newEntry = lastEntry.replace(/[\w]+\s*$/, "")
+        }
+        setTextValue([...textValue, newEntry])
+        setCaps({ active: false, locked: false })
       }
     },
     {
       type: "cmd",
-      setter: "position",
-      value: "autocomplete",
       label: "format_list_numbered",
-      action: ({ setter }: Keyboard.CmdKeyAction<Keyboard.KeyPosition>) => {
-        if (!document.getElementById(HTML_IDS.AUTOCOMPLETE_LIST)) {
-          setter([0, 0])
+      skipKeyReset: true,
+      action: ({ setCurrentKey }) => {
+        if (!document.getElementById(PREDICTIONS.HTML_ID)) {
+          setCurrentKey([0, 0])
           return
         }
-        const newKey: Keyboard.KeyPosition = [0, 20]
+        const newKey: Keyboard.KeyPosition =
+          [KEYBOARD.LIMIT, KEYBOARD.LIMIT]
         if (!keyExists(newKey)) {
           while (!keyExists(newKey)) {
             --newKey[1]
           }
         }
-        setter(newKey)
+        setCurrentKey(newKey)
       }
     },
     { type: "neutral" },
     {
       type: "cmd",
-      value: "space",
       label: "space_bar",
-      action: ({ value, setter }: Keyboard.CmdKeyAction<string[]>) => {
-        const lastEntry = [...value].pop()
+      action: ({ textValue, setTextValue }) => {
+        const lastEntry = [...textValue].pop()
         const newEntry = lastEntry ? `${lastEntry} ` : " "
-        setter([...value, newEntry])
+        setTextValue([...textValue, newEntry])
       }
     },
     {
       type: "cmd",
-      value: "return",
       label: "keyboard_return",
-      action: ({ value, setter }: Keyboard.CmdKeyAction<string[]>) => {
-        const lastEntry = [...value].pop()
+      action: ({ textValue, setTextValue }) => {
+        const lastEntry = [...textValue].pop()
         if (!lastEntry) return
         const lp = localPredictions()
         lp.store(lastEntry)
-        setter([""])
+        setTextValue([""])
       }
     },
     {
       type: "cmd",
-      setter: "shift",
-      value: "shift",
       label: "shift",
-      action: ({ value: { active, locked }, setter }:
-        Keyboard.CmdKeyAction<Keyboard.Caps>) => {
+      value: {
+        shift: {
+          fill: true
+        },
+        caps: {
+          fill: true,
+          label: "shift_lock"
+        }
+      },
+      action: ({ caps: { active, locked }, setCaps }) => {
         if (!active && !locked) {
-          setter({ active: true, locked: false })
+          setCaps({ active: true, locked: false })
         } else if (active && !locked) {
-          setter({ active: true, locked: true })
+          setCaps({ active: true, locked: true })
         } else {
-          setter({ active: false, locked: false })
+          setCaps({ active: false, locked: false })
         }
       }
     },
     {
       type: "cmd",
-      value: "numpad",
       label: "123",
       action: () => { return }
     },

@@ -19,7 +19,7 @@ export default function () {
     () => void 0)
 
   return (
-    <Layout>
+    <Layout location={{ "Configurações": "settings" }}>
       <Box sx={{
         alignItems: "center",
         display: "flex",

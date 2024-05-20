@@ -1,6 +1,15 @@
+import PREDICTIONS from "@/const/PREDICTIONS"
 import type { Typewise } from "../types"
 
-export default async function (value: string) {
+/**
+ * 
+ * @param value 
+ * @param maxPredictions 
+ * @returns 
+ */
+export default async function (
+  value: string,
+  maxPredictions = PREDICTIONS.MAX_PREDICTIONS) {
   let request
   try {
     request = await fetch("https://api.typewise.ai/latest/completion/complete", {
@@ -13,7 +22,7 @@ export default async function (value: string) {
         "languages": ["pt"],
         "text": value,
         "correctTypoInPartialWord": true,
-        "maxNumberOfPredictions": 6
+        "maxNumberOfPredictions": maxPredictions
       })
     })
     if (!request.ok) {
@@ -21,7 +30,7 @@ export default async function (value: string) {
       return
     }
     return request.json() as Promise<Typewise.CompletionResponse>
-  } catch(err) {
+  } catch (err) {
     console.error(err)
     return
   }

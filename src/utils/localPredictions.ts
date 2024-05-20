@@ -1,3 +1,4 @@
+import PREDICTIONS from "@/const/PREDICTIONS"
 import type { Keyboard } from "@/types"
 
 /**
@@ -17,7 +18,7 @@ class LocalPredictions {
    */
   private _predictions: Keyboard.localPrediction[]
 
-  constructor () {
+  constructor() {
     const localStorageSuggestions = localStorage.getItem(this._STORAGE_ID)
     this._predictions = localStorageSuggestions ?
       JSON.parse(atob(localStorageSuggestions)) : []
@@ -28,10 +29,11 @@ class LocalPredictions {
    * também o número de vezes que ela já foi usada.
    * @param entry Sugestão a ser armazenada.
    */
-  public store (entry: string) {
+  public store(entry: string) {
+    const e = entry.replaceAll(/^\s+|\s+$/g, "").replaceAll(/\s+/g, " ")
     const index = this._predictions.findIndex(
       prediction => (
-        new RegExp(`${entry}`, "gi").test(prediction.value)
+        new RegExp(`${e}`, "gi").test(prediction.value)
       )
     )
     if (index !== -1) {
@@ -41,7 +43,7 @@ class LocalPredictions {
       })
     } else {
       this._predictions.push({
-        value: entry,
+        value: e,
         timesUsed: 1
       })
     }
@@ -53,14 +55,23 @@ class LocalPredictions {
 
   /**
    * Gera lista de sugestões para autocomplete com
-   * itens que já foram escritos antes.
+   * itens que já foram escritos antes, ordenado do
+   * mais usado para o menos usado.
    * @param entry Texto a ser completado.
    * @param maxPredictions 
-   * Número de itens a serem retornados. @default 10
+   * Número de itens a serem retornados.
    * @returns Lista de sugestões para autocomplete
    */
-  public from(entry: string, maxPredictions: 10) {
-    return []
+  public from(
+    entry: string,
+    maxPredictions = PREDICTIONS.MAX_PREDICTIONS) {
+    return this._predictions
+      .filter(({ value }) => (
+        new RegExp(`${entry}`, "gi").test(value)
+      ))
+      .toSorted((a, b) => b.timesUsed - a.timesUsed)
+      .splice(0, maxPredictions)
+      .map(({ value }) => value)
   }
 }
 

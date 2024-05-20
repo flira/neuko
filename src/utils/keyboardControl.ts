@@ -1,4 +1,5 @@
 import keyExists from "./keyExists"
+import KEYBOARD from "@/const/KEYBOARD"
 import WS from "@/const/WS"
 import type { Keyboard } from "@/types"
 
@@ -18,13 +19,12 @@ function keyboardControl(
     setCurrentKey: React.Dispatch<React.SetStateAction<Keyboard.KeyPosition>>) {
     WS.onmessage = ({ data }) => {
         const newKey: Keyboard.KeyPosition = [...currentKey]
-        const l = 20
         switch (data) {
             default: break
             case "w":
                 ++newKey[1]
                 if (!keyExists(newKey)) {
-                    newKey[1] = -l
+                    newKey[1] = -KEYBOARD.LIMIT
                     while (!keyExists(newKey)) {
                         ++newKey[1]
                     }
@@ -34,7 +34,7 @@ function keyboardControl(
             case "a":
                 --newKey[0]
                 if (!keyExists(newKey)) {
-                    newKey[0] = l
+                    newKey[0] = KEYBOARD.LIMIT
                     while (!keyExists(newKey)) {
                         --newKey[0]
                     }
@@ -44,7 +44,7 @@ function keyboardControl(
             case "s":
                 --newKey[1]
                 if (!keyExists(newKey)) {
-                    newKey[1] = l
+                    newKey[1] = KEYBOARD.LIMIT
                     while (!keyExists(newKey)) {
                         --newKey[1]
                     }
@@ -54,7 +54,7 @@ function keyboardControl(
             case "d":
                 ++newKey[0]
                 if (!keyExists(newKey)) {
-                    newKey[0] = -l
+                    newKey[0] = -KEYBOARD.LIMIT
                     while (!keyExists(newKey)) {
                         ++newKey[0]
                     }

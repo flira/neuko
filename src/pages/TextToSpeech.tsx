@@ -5,8 +5,10 @@ import { TextKeyboard } from "@/components/keyboard"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Suggestion from "@/components/keyboard/Suggestion"
-import HTML_IDS from "@/const/HTML_IDS"
 import isUppercase from "@/utils/isUpperCase"
+import localPredictions from "@/utils/localPredictions"
+import KEYBOARD from "@/const/KEYBOARD"
+import PREDICTIONS from "@/const/PREDICTIONS"
 import { useEffect } from "react"
 
 /**
@@ -20,15 +22,25 @@ export default function () {
   useEffect(() => {
     const lastEntry = [...textValue].pop()
     if (lastEntry) {
-      fetchAutocomplete(lastEntry).then(predictions => {
-        const ac = !predictions ? [] : predictions.predictions.map(({ text }) => {
-          const lastWord = lastEntry.split(" ").pop()
-          if (!lastWord || !isUppercase(lastWord)) return text
-          if (isUppercase(lastWord[1])) return text.toLocaleUpperCase()
-          return text[0].toUpperCase() + text.substring(1)
+      const lp = localPredictions()
+      const ac = lp.from(lastEntry)
+      fetchAutocomplete(lastEntry, PREDICTIONS.MAX_PREDICTIONS - ac.length)
+        .then(predictions => {
+          if (!predictions) {
+            return
+          }
+          predictions.predictions.forEach(({ text }) => {
+            const lastWord = lastEntry.split(" ").pop()
+            if (!lastWord || !isUppercase(lastWord)) {
+              ac.push(text)
+            } else if (isUppercase(lastWord[1])) {
+              ac.push(text.toLocaleUpperCase())
+            } else {
+              ac.push(text[0].toUpperCase() + text.substring(1))
+            }
+          })
+          setAutocomplete(ac)
         })
-        setAutocomplete(ac)
-      })
     } else {
       setAutocomplete([])
     }
@@ -58,10 +70,10 @@ export default function () {
             width: "100%"
           }}>
             {autocomplete.length ?
-              <ol id={HTML_IDS.AUTOCOMPLETE_LIST}>
+              <ol id={PREDICTIONS.HTML_ID}>
                 {autocomplete.map((prediction, i, arr) => (
                   <li key={`autocomplete-prediction-${i}`}>
-                    <Suggestion position={[0, (arr.length + 3) - i]}>
+                    <Suggestion position={[KEYBOARD.LIMIT, arr.length - (i + 1)]}>
                       {prediction}
                     </Suggestion>
                   </li>

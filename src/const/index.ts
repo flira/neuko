@@ -1,2 +1,3 @@
-export * from "@/const/HTML_IDS"
+export * from "@/const/KEYBOARD"
+export * from "@/const/PREDICTIONS"
 export * from "@/const/WS"

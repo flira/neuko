@@ -1,5 +1,9 @@
 import Box from "@mui/material/Box"
 import LinearProgress from "@mui/material/LinearProgress"
+import keyboardControl from "@/utils/keyboardControl"
+import keyExists from "@/utils/keyExists"
+import KEYBOARD from "@/const/KEYBOARD"
+import WS from "@/const/WS"
 import { useEffect, useState } from "react"
 import { lightGreen } from "@mui/material/colors"
 import { useKeyboardContext } from "@/providers/KeyboardProvider"
@@ -46,6 +50,24 @@ export default function ({ children, position }: SuggestionProps) {
     }
 
     useEffect(() => {
+        if (currentKey[0] === KEYBOARD.LIMIT) {
+            WS.onmessage = ({ data }) => {
+                const newKey: Keyboard.KeyPosition = [...currentKey]
+                switch (data) {
+                    default: break
+                    case "w":
+                        ++newKey[1]
+                        break
+                    case "s":
+                        --newKey[1]
+                        break
+                }
+                setCurrentKey(keyExists(newKey) ? newKey : [0, 0])
+            }
+        }
+    })
+
+    useEffect(() => {
         if (focused) {
             timerConterTimeout = setInterval(intervalHandler, (keySpeed) / 100)
         }
@@ -53,7 +75,7 @@ export default function ({ children, position }: SuggestionProps) {
     }, [focused])
 
     useEffect(() => {
-        if (focused && timerValue === 100) { 
+        if (focused && timerValue === 100) {
             const lastEntry = [...textValue].pop() as string
             const newValue =
                 !textValue.length ? children :

@@ -3,7 +3,7 @@ import { lightGreen } from "@mui/material/colors"
 import { Icon } from "@/components/Icon"
 import { useEffect, useState } from "react"
 import { useKeyboardContext } from "@/providers/KeyboardProvider"
-import { NavigateFunction, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import type { Keyboard } from "@/types"
 import type { BoxProps } from "@mui/material"
 
@@ -57,10 +57,10 @@ export default function Key({ keyData: key, position }: KeyProps) {
       return (
         <Container data-x={position[0]} data-y={position[1]}>
           <CmdKey
-            setter={"setter" in key ? key.setter : undefined}
             action={key.action}
             selected={isSelected}
-            value={key.value}>
+            value={key.value}
+            skipKeyReset={key.skipKeyReset}>
             {key.label}
           </CmdKey>
         </Container>
@@ -124,104 +124,64 @@ function CharKey({ children, selected }: CharKeyProps) {
   )
 }
 
-interface CmdKeyPropsTemplate {
+interface CmdKeyProps {
+  action: (params: Keyboard.ActionParams) => void
   children: string
   selected: boolean
-  value: string
-}
-interface DefaultCmdKeyProps extends CmdKeyPropsTemplate {
-  action: (cmdKeyAction: Keyboard.CmdKeyAction<string[]>) => void
-  setter: undefined
+  value?: Keyboard.KeyLabel
+  skipKeyReset?: boolean
 }
 
-interface CmdShiftKeyProps extends CmdKeyPropsTemplate {
-  action: (cmdKeyAction: Keyboard.CmdKeyAction<Keyboard.Caps>) => void
-  setter: "shift"
-}
-
-interface CmdPositionKeyProps extends CmdKeyPropsTemplate {
-  action: (cmdKeyAction: Keyboard.CmdKeyAction<Keyboard.KeyPosition>) => void
-  setter: "position"
-}
-
-interface CmdLocationKeyProps extends CmdKeyPropsTemplate {
-  action: (navigate: NavigateFunction) => void
-  setter: "location"
-}
-
-type CmdKeyProps =
-  DefaultCmdKeyProps |
-  CmdLocationKeyProps |
-  CmdPositionKeyProps |
-  CmdShiftKeyProps
 
 function CmdKey(
-  { action, children, selected, setter, value }: CmdKeyProps
+  { action, children, value, selected, skipKeyReset }: CmdKeyProps
 ) {
-  const {
-    caps,
-    currentKey,
-    keySpeed,
-    setCaps,
-    setCurrentKey,
-    setTextValue,
-    textValue } = useKeyboardContext()
+  const kc = useKeyboardContext()
   const navigate = useNavigate()
-  function actionReducer() {
-    switch (setter) {
-      default:
-        return {
-          value: textValue,
-          setter: setTextValue
-        }
-      case "location":
-        return navigate
-      case "position":
-        return {
-          value: currentKey,
-          setter: setCurrentKey
-        }
-      case "shift":
-        return {
-          value: caps,
-          setter: setCaps
-        }
-    }
-  }
 
   const timeoutHandler = () => {
-    action(actionReducer())
-    if (setter !== "position") {
-      setCurrentKey([0, 0])
+    action({ navigate: navigate, ...kc })
+    if (!skipKeyReset) {
+      kc.setCurrentKey([0, 0])
     }
   }
 
   useEffect(() => {
     if (selected) {
       clearTimeout(keyboardTimer)
-      keyboardTimer = setTimeout(timeoutHandler, keySpeed)
+      keyboardTimer = setTimeout(timeoutHandler, kc.keySpeed)
     }
     return () => {
       clearTimeout(keyboardTimer)
     }
   }, [selected])
 
-  const KeyBase = () => value !== "shift" || !caps.active ?
-    <Icon>
-      {children}
-    </Icon> :
-    !caps.locked ?
-      <Icon fill={true}>
-        {children}
-      </Icon> :
-      <Icon fill={true}>
-        {"shift_lock"}
+  const KeyBase = () => {
+    if (!value || (!kc.caps.active && !kc.caps.locked)) {
+      return (
+        <Icon>
+          {children}
+        </Icon>
+      )
+    }
+    if (kc.caps.locked) {
+      return (
+        <Icon fill={value?.caps?.fill}>
+          {value?.caps?.label ? value.caps.label : children}
+        </Icon>
+      )
+    }
+    return (
+      <Icon fill={value?.shift?.fill}>
+        {value?.shift?.label ? value.shift.label : children}
       </Icon>
+    )
+  }
 
   return (
     !selected ?
       <KeyBase /> :
-      <TimerCounter title={value}>
+      <TimerCounter>
         <KeyBase />
       </TimerCounter>
   )

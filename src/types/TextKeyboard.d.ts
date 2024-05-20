@@ -15,56 +15,31 @@ export namespace Keyboard {
     selected?: boolean
   }
 
-  /**
-   * @internal
-   * Tipo genérico de estado do react.
-   */
-  interface CmdKeyAction<Type> {
-    value: Type
-    setter: React.Dispatch<React.SetStateAction<Type>>
+  interface ActionParams extends KeyboardContext {
+    navigate: NavigateFunction
   }
 
+  export interface KeyLabelOptions {
+    label?: string;
+    fill?: boolean;
+  }
+  export interface KeyLabel {
+    shift?: KeyLabelOptions
+    caps?: KeyLabelOptions
+  }
   /**
-   * @internal
    * Tipo base para outras teclas
    */
-  interface CmdKeyTemplate {
+  export interface CmdKey {
+    action: (params: ActionParams) => void
     type: "cmd"
-    value: string
     /** Material Symbols code */
     label: string
     selected?: boolean
-  }
-
-  /**
-   * Tecla que altera valor de texto
-   */
-  export interface CmdKey extends CmdKeyTemplate {
-    action: (prop: CmdKeyAction<string[]>) => void
-  }
-
-  /**
-   * Tecla para navegação no app.
-   */
-  export interface CmdLocationtKey extends CmdKeyTemplate {
-    setter: "location"
-    action: (navigate: NavigateFunction) => void
-  }
-
-  /**
-   * Tecla para navegação pelo teclado.
-   */
-  export interface CmdPositionKey extends CmdKeyTemplate {
-    setter: "position"
-    action: (prop: CmdKeyAction<Keyboard.KeyPosition>) => void
-  }
-
-  /**
-   * Tecla para alterar entre caixa alta e caixa baixa.
-   */
-  export interface CmdShiftKey extends CmdKeyTemplate {
-    setter: "shift"
-    action: (prop: CmdKeyAction<Keyboard.Caps>) => void
+    /** Permite labels diferentes para */ 
+    value?: KeyLabel
+    /** Não reposiciona o cursor para a tecla neutra após ativada */
+    skipKeyReset?: boolean
   }
 
   /**
@@ -107,16 +82,9 @@ export namespace Keyboard {
     setTextValue: React.Dispatch<React.SetStateAction<string[]>>
   }
 
-  export type Key =
-    BlankKey |
-    CharKey |
-    CmdKey |
-    CmdPositionKey |
-    CmdLocationtKey |
-    CmdShiftKey |
-    NeutralKey
+  export type Key = BlankKey | CharKey | CmdKey | NeutralKey
 
-    /** Usado para autocomplete com localstorage */
+  /** Usado para autocomplete com localstorage */
   export interface localPrediction {
     /** Texto. */
     value: string
