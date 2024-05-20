@@ -20,8 +20,8 @@ export default function () {
   useEffect(() => {
     const lastEntry = [...textValue].pop()
     if (lastEntry) {
-      fetchAutocomplete(lastEntry).then(suggestions => {
-        const ac = !suggestions ? [] : suggestions.predictions.map(({ text }) => {
+      fetchAutocomplete(lastEntry).then(predictions => {
+        const ac = !predictions ? [] : predictions.predictions.map(({ text }) => {
           const lastWord = lastEntry.split(" ").pop()
           if (!lastWord || !isUppercase(lastWord)) return text
           if (isUppercase(lastWord[1])) return text.toLocaleUpperCase()

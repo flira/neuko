@@ -1,5 +1,6 @@
 import keyExists from "@/utils/keyExists"
 import HTML_IDS from "@/const/HTML_IDS"
+import localPredictions from "@/utils/localPredictions"
 import type { Keyboard } from "@/types"
 
 const textKeys: Keyboard.Key[][] = []
@@ -74,7 +75,7 @@ textKeys.push( // linha 4
       action: ({ value, setter }: Keyboard.CmdKeyAction<string[]>) => {
         const lastEntry = [...value].pop()
         const newEntry = lastEntry ?
-        lastEntry.substring(0, lastEntry.length - 1) : ""
+          lastEntry.substring(0, lastEntry.length - 1) : ""
         setter([...value, newEntry])
       }
     },
@@ -112,7 +113,13 @@ textKeys.push( // linha 4
       type: "cmd",
       value: "return",
       label: "keyboard_return",
-      action: () => { return }
+      action: ({ value, setter }: Keyboard.CmdKeyAction<string[]>) => {
+        const lastEntry = [...value].pop()
+        if (!lastEntry) return
+        const lp = localPredictions()
+        lp.store(lastEntry)
+        setter([""])
+      }
     },
     {
       type: "cmd",
