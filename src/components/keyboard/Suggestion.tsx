@@ -1,6 +1,5 @@
 import Box from "@mui/material/Box"
 import LinearProgress from "@mui/material/LinearProgress"
-import keyboardControl from "@/utils/keyboardControl"
 import keyExists from "@/utils/keyExists"
 import KEYBOARD from "@/const/KEYBOARD"
 import WS from "@/const/WS"
