@@ -6,6 +6,7 @@ import keyboardControl from "@/utils/keyboardControl"
 import { useKeyboardContext } from "@/providers/KeyboardProvider"
 import Layout from "@/components/Layout"
 import TextField from "@mui/material/TextField"
+import KEYBOARD from "@/const/KEYBOARD"
 import WS from "@/const/WS"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
@@ -29,7 +30,6 @@ export default function () {
       }}>
         <Key position={[-1, 0]} keyData={{
           type: "cmd",
-          value: "home",
           label: "home",
           action: () => navigate("/")
         }} />
@@ -47,6 +47,7 @@ export default function () {
 }
 
 let timerConterTimeout: NodeJS.Timeout
+let speed = KEYBOARD.DEFAULT_SPEED
 
 function SpeedSetting() {
   const { currentKey, keySpeed, setCurrentKey, setKeySpeed } = useKeyboardContext()
@@ -54,37 +55,43 @@ function SpeedSetting() {
   const focused = currentKey.toString() === "1,0"
 
   useEffect(() => {
-    WS.onmessage = ({ data }) => {
-      const i = keySpeed
-      switch (data) {
-        default: break
-        case "w":
-          setKeySpeed(() => i + 250)
-          break
-        case "a":
-          setCurrentKey([0, 0])
-          break
-        case "s":
-          setKeySpeed(() => i - 250)
-          break
-        case "d":
-          setCurrentKey([-1, 0])
-          break
-      }
-    }
-    timerConterTimeout = setInterval(
-      () => {
-        if (timerValue === 100) {
-          setTimerValue(0)
+    if (currentKey[0] > 0) {
+      WS.onmessage = ({ data }) => {
+        switch (data) {
+          default: break
+          case "w":
+            speed += 250
+            localStorage.setItem(KEYBOARD.SPEED_ID, `${speed}`)
+            setKeySpeed(speed)
+            break
+          case "a":
+            setCurrentKey([0, 0])
+            break
+          case "s":
+            if (speed > 500) {
+              speed -= 250
+              localStorage.setItem(KEYBOARD.SPEED_ID, `${speed}`)
+              setKeySpeed(speed)
+            }
+            break
+          case "d":
+            setCurrentKey([-1, 0])
+            break
         }
-        setTimerValue(timerValue + 1)
-      }, keySpeed / 100
-    )
+      }
+      timerConterTimeout = setInterval(
+        () => {
+          if (timerValue === 100) {
+            setTimerValue(0)
+          }
+          setTimerValue(timerValue + 1)
+        }, keySpeed / 100
+      )
+    }
     return () => {
       clearInterval(timerConterTimeout)
-      WS.onmessage = null
     }
-  }, [currentKey])
+  })
 
   return (
     <Box sx={{
@@ -103,7 +110,7 @@ function SpeedSetting() {
           alignItems: "center",
           display: "flex",
         }}>
-          <Box sx={{fontWeight: 600}}>
+          <Box sx={{ fontWeight: 600 }}>
             Velocidade do teclado
           </Box>
           <Box sx={{
@@ -120,7 +127,7 @@ function SpeedSetting() {
               type="number"
               value={(keySpeed / 1e3)}
               variant="standard"
-              sx={{ width: "6.5em" }} />
+              sx={{ width: "3em" }} />
             {focused && <Icon>keyboard_arrow_down</Icon>}
           </Box>
           {focused && <CircularProgress
