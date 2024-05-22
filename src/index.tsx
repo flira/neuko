@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import {
-  BrowserRouter,
+  HashRouter,
   Route,
   Routes
 } from 'react-router-dom'
@@ -20,13 +20,13 @@ function init() {
     <StrictMode>
       <AppProvider>
         <CssBaseline />
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/texteditor" element={<TextEditor />} />
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       </AppProvider>
     </StrictMode>
   )
