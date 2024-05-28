@@ -123,17 +123,6 @@ textKeys.push( // linha 4
     },
     {
       type: "cmd",
-      label: "keyboard_return",
-      action: ({ textValue, setTextValue }) => {
-        const lastEntry = [...textValue].pop()
-        if (!lastEntry) return
-        const lp = localPredictions()
-        lp.store(lastEntry)
-        setTextValue([""])
-      }
-    },
-    {
-      type: "cmd",
       label: "shift",
       value: {
         shift: {
@@ -156,10 +145,29 @@ textKeys.push( // linha 4
     },
     {
       type: "cmd",
-      label: "123",
-      action: () => { return }
+      label: "archive",
+      action: ({ textValue, setTextValue }) => {
+        const lastEntry = [...textValue].pop()
+        if (!lastEntry) return
+        const lp = localPredictions()
+        lp.store(lastEntry)
+        setTextValue([""])
+      }
     },
-
+    {
+      type: "cmd",
+      label: "mic",
+      action: ({ textValue, setTextValue }) => {
+        const lastEntry = [...textValue].pop()
+        if (!lastEntry) return
+        const lp = localPredictions()
+        lp.store(lastEntry)
+        const speech = new SpeechSynthesisUtterance(lastEntry);
+        speech.lang = "pt-BR";
+        speech.onend = () => setTextValue([""]);
+        speechSynthesis.speak(speech);
+      }
+    }
   ]
 )
 
