@@ -49,7 +49,6 @@ textKeys.push( // linha 3
   ]
 )
 
-
 textKeys.push( // linha 4
   [
     {
@@ -162,10 +161,40 @@ textKeys.push( // linha 4
         if (!lastEntry) return
         const lp = localPredictions()
         lp.store(lastEntry)
-        const speech = new SpeechSynthesisUtterance(lastEntry);
-        speech.lang = "pt-BR";
-        speech.onend = () => setTextValue([""]);
-        speechSynthesis.speak(speech);
+        /** @TODO ver https://vitejs.dev/guide/env-and-mode.html para arrumar typescript */
+        fetch(`https://us-central1-texttospeech.googleapis.com/v1beta1/text:synthesize?key=${import.meta.env.VITE_API_KEY}`, {
+          method: "POST",
+          body: JSON.stringify({
+            audioConfig: {
+              audioEncoding: "LINEAR16",
+              effectsProfileId: [
+                "small-bluetooth-speaker-class-device"
+              ],
+              pitch: 0,
+              speakingRate: 1
+            },
+            input: {
+              text: lastEntry
+            },
+            voice: {
+              languageCode: "pt-BR",
+              name: "pt-BR-Neural2-B"
+            }
+          })
+        })
+          .catch(err => console.error(err))
+          .then(data => {
+            if (!data) return Promise.reject("No data fetched")
+            if (!data.ok) {
+              return Promise.reject(new Error(JSON.stringify(data)))
+            }
+            return data.json()
+          })
+          .then(json => {
+            const audio = new Audio(`data:audio/ogg;base64,${json.audioContent}`)
+            audio.onended = () => setTextValue([""])
+            audio.play()
+          })
       }
     }
   ]
