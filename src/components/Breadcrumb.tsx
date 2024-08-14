@@ -13,10 +13,11 @@ export interface LayoutProps {
   location?: { [k: LayoutPropsKey]: LayoutPropsValue }
 }
 
-export default function ({ location }: LayoutProps) {
+export default function Breadcrumb({ location }: LayoutProps) {
   const id = useId()
-  const Path: ({ id }: React.HTMLProps<Element>) => JSX.Element[] | undefined = id => location ? Object.entries(location)
-    .map(locationMap.bind(null, id)) : undefined
+  const Path = ({ id }: React.HTMLProps<HTMLElement>) => location ?
+      Object.entries(location).map(locationMap.bind(null, id || "")) :
+      undefined
 
   return (
     <Box component="header" sx={{ pb: 2 }}>
@@ -42,7 +43,7 @@ function locationMap(
   id: string,
   [key, value]: [key: LayoutPropsKey, value: LayoutPropsValue],
   i: number,
-  arr: string[]) {
+  arr: [string, string][]) {
   const current = i === arr.length - 1
   return (
     <Box

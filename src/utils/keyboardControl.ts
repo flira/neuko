@@ -14,7 +14,7 @@ import type { Keyboard } from "@/types"
  * useEffect(keyboardControl.bind(null, currentKey, setCurrentKey))
  * ```
  */
-function keyboardControl(
+export default function keyboardControl(
     currentKey: Keyboard.KeyPosition,
     setCurrentKey: React.Dispatch<React.SetStateAction<Keyboard.KeyPosition>>) {
     WS.onmessage = ({ data }) => {
@@ -66,5 +66,3 @@ function keyboardControl(
         WS.onmessage = null
     }
 }
-
-export default keyboardControl

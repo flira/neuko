@@ -2,12 +2,11 @@ import PREDICTIONS from "@/const/PREDICTIONS"
 import type { Typewise } from "../types"
 
 /**
- * 
  * @param value 
  * @param maxPredictions 
  * @returns 
  */
-export default async function (
+export default async function fetchAutocomplete(
   value: string,
   maxPredictions = PREDICTIONS.MAX_PREDICTIONS) {
   let request

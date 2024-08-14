@@ -2,7 +2,7 @@ import Box from "@mui/material/Box"
 import Key from "@/components/keyboard/Key"
 import type { Keyboard } from "src/types"
 
-function keyboardMap(row: Keyboard.Key[], y: number, keyset: Keyboard.Key[][]) {
+export default function keyboardMap(row: Keyboard.Key[], y: number, keyset: Keyboard.Key[][]) {
   return (
     <Box
       key={btoa(`row-${y}`)}
@@ -27,5 +27,3 @@ function keyMap(y: number, keyset: Keyboard.Key[][], key: Keyboard.Key, x: numbe
     keyData={key}
     position={position} />
 }
-
-export default keyboardMap

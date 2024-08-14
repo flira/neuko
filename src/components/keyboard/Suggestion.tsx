@@ -14,7 +14,7 @@ export interface SuggestionProps {
     position: Keyboard.KeyPosition
 }
 
-export default function ({ children, position }: SuggestionProps) {
+export default function Suggestion ({ children, position }: SuggestionProps) {
     const { currentKey, keySpeed, textValue, setCurrentKey, setTextValue } = useKeyboardContext()
     const [timerValue, setTimerValue] = useState(0)
     const focused = currentKey.toString() === position.toString()

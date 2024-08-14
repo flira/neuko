@@ -11,7 +11,7 @@ import WS from "@/const/WS"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-export default function () {
+export default function Settings() {
   const { currentKey, setCurrentKey } = useKeyboardContext()
   const navigate = useNavigate()
 

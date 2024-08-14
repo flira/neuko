@@ -24,7 +24,7 @@ const KeyboardContext = createContext<Keyboard.KeyboardContext>({
 
 export const useKeyboardContext = () => useContext(KeyboardContext)
 
-export default function ({ children }: { children: React.ReactNode }) {
+export default function KeyboardProvider({ children }: { children: React.ReactNode }) {
   const [caps, setCaps] = useState<Keyboard.Caps>(DEFAULT_CAPS)
   const [currentKey, setCurrentKey] = useState<Keyboard.KeyPosition>([0, 0])
   const [keySpeed, setKeySpeed] = useState(ks)

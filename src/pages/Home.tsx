@@ -7,7 +7,7 @@ import { useKeyboardContext } from "@/providers/KeyboardProvider"
 import { useEffect } from "react"
 
 
-export default function () {
+export default function Home () {
   const {currentKey, setCurrentKey} = useKeyboardContext()
   useEffect(keyboardControl.bind(null, currentKey, setCurrentKey))
 

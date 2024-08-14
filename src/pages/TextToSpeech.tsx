@@ -16,7 +16,7 @@ import { useEffect } from "react"
  * https://www.npmjs.com/package/@sefinek/google-tts-api
  */
 
-export default function () {
+export default function TTS () {
   const { autocomplete, textValue, setAutocomplete } = useKeyboardContext()
 
   useEffect(() => {

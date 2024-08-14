@@ -2,7 +2,7 @@ import Box from "@mui/material/Box"
 import Breadcrumb, { LayoutProps } from "@/components/Breadcrumb"
 import { SxProps } from "@mui/material"
 
-export default function (
+export default function Layout (
   { children, location }:
     React.HTMLProps<HTMLElement> & LayoutProps) {
   const baseStyle: SxProps = {
