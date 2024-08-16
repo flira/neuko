@@ -10,6 +10,7 @@ export default function Layout (
     flexDirection: "column",
     flexGrow: "1"
   }
+  
   return (
     <Box sx={{ ...baseStyle, p: 2 }}>
       <Breadcrumb location={location} />

@@ -5,24 +5,6 @@
   <title>NeuKo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script type="module" src="/src/index.tsx"></script>
-  <script>
-    /**
-     * Script para teste do websocket.
-     * Usa o "WASD" do teclado para enviar
-     * comandos para o servidor.
-     */
-    (()=>{
-      const ws = new WebSocket("ws://localhost:1337")
-      const keyDown = ({key}) => {
-        const regex = /[wasd]/
-        if(regex.test(key)) {
-          ws.send(key)
-        }
-      }
-      addEventListener("keydown", keyDown)
-    })()
-
-  </script>
   <style>
     /* Fonte principal */
     @font-face {

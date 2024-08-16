@@ -6,6 +6,8 @@ import {
   Routes
 } from 'react-router-dom'
 import CssBaseline from '@mui/material/CssBaseline'
+import responsiveFont from './utils/responsiveFont'
+import websocketTest from './utils/websocketTest'
 import AppProvider from "@/providers/AppProvider"
 import Home from '@/pages/Home'
 import TextEditor from '@/pages/TextToSpeech'
@@ -14,6 +16,8 @@ import Settings from '@/pages/Settings'
 document.addEventListener('readystatechange', init)
 
 function init() {
+  responsiveFont()
+  websocketTest()
   const root = document.createElement('div')
   root.setAttribute("style", "display: flex; flex-grow: 1")
   ReactDOM.createRoot(root).render(
